@@ -323,6 +323,7 @@ struct MoveToPointParams {
         float earlyExitRange = 0;
 };
 
+
 // default drive curve
 extern ExpoDriveCurve defaultDriveCurve;
 
@@ -910,6 +911,13 @@ class Chassis {
          * @warning Do not interact with these unless you know what you are doing
          */
         PID angularPID;
+
+        void changeLatP (float P);
+        void changeLatI (float I);
+        void changeLatD (float D);
+        void changeAngularP (float P);
+        void changeAngularI (float I);
+        void changeAngularD (float D);
     protected:
         /**
          * @brief Indicates that this motion is queued and blocks current task until this motion reaches front of queue

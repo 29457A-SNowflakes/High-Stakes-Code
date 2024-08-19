@@ -29,13 +29,13 @@ class Console {
 
 	/// @name Console Functions
   private:
-	rd_view_t *view;
 
 	lv_obj_t *output;
 	lv_obj_t *output_cont;
 	std::ostringstream stream;
 
   public:
+	rd_view_t *view;
 	/**
 	 * @brief Create a new Console
 	 *
