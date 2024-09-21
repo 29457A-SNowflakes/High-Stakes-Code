@@ -12,36 +12,22 @@ using namespace utils;
  * to keep execution time for this mode under a few seconds.
  */
 
-void initPID() {
-
-	float LatP = load_value("latP");
-	float LatI = load_value("latI");
-	float LatD = load_value("latD");
-
-	float AngularP = load_value("angP");
-	float AngularI = load_value("angI");
-	float AngularD = load_value("angD");
-
-	Robot::Auton::Tuning::latController.kP = LatP;
-    Robot::Auton::Tuning::latController.kI = LatI;
-    Robot::Auton::Tuning::latController.kD = LatD;
-
-    Robot::Auton::Tuning::angularController.kP = AngularP;
-    Robot::Auton::Tuning::angularController.kI = AngularI;
-    Robot::Auton::Tuning::angularController.kD = AngularD;
-        
-    Robot::chassis.changeAngularP(AngularP);
-    Robot::chassis.changeAngularI(AngularI);
-    Robot::chassis.changeAngularD(AngularD);
-	
-	Robot::chassis.changeLatP(LatP);
-	Robot::chassis.changeLatI(LatI);
-	Robot::chassis.changeLatD(LatD);
-}
+#include "nlohmann/json.hpp"
+#include "pros/apix.h"
 void initialize() {
-	initPID();
-	pros::delay(1000);
-	Robot::master.print(1, 1, "??");
+	pros::c::serctl(SERCTL_DISABLE_COBS, nullptr);
+	pros::Task task ([=] {
+		while (true) {
+			nlohmann::json package = {
+				{"odom/x", Robot::chassis.getPose().x},
+				{"odom/y", Robot::chassis.getPose().y},
+				{"odom/theta", Robot::chassis.getPose().theta},
+			};
+			std::cout << package.dump() << "\n";
+			pros::delay(10);
+		}
+	});
+	Robot::Init::initAll();
 	Robot::Auton::Tuning::TuningLogicLoop();
 }
 

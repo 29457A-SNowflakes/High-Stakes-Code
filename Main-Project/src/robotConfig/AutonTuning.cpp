@@ -12,41 +12,6 @@
 #include "usr/utils.h"
 using namespace utils;
 
-pros::Controller Robot::master (pros::E_CONTROLLER_MASTER);
-rd::Console Robot::Auton::Tuning::AutonTuning ("PID Tuner");
-
-lemlib::ControllerSettings Robot::Auton::Tuning::latController (10, // proportional gain (kP)
-                                            0, // integral gain (kI)
-                                            3, // derivative gain (kD)
-                                            3, // anti windup
-                                            1, // small error range, in inches
-                                            100, // small error range timeout, in milliseconds
-                                            3, // large error range, in inches
-                                            500, // large error range timeout, in milliseconds
-                                            20 // maximum acceleration (slew)
-);
-lemlib::ControllerSettings Robot::Auton::Tuning::angularController(2, // proportional gain (kP)
-                                             0, // integral gain (kI)
-                                             10, // derivative gain (kD)
-                                             3, // anti windup
-                                             1, // small error range, in degrees
-                                             100, // small error range timeout, in milliseconds
-                                             3, // large error range, in degrees
-                                             500, // large error range timeout, in milliseconds
-                                             0 // maximum acceleration (slew)
-);
-pros::MotorGroup left ({-1, -2, -3});
-pros::MotorGroup right ({4, 5, 6});
-const lemlib::Drivetrain Robot::Motors::drivetrain (&left, &right, 11, 2.75, 450, 0);
-pros::Imu imu (19);
-const lemlib::OdomSensors Robot::Sensors::sensors (nullptr, nullptr, nullptr, nullptr, &imu);
-lemlib::Chassis Robot::chassis (Motors::drivetrain, Auton::Tuning::latController, Auton::Tuning::angularController, Sensors::sensors);
-void placeholder () {pros::delay(1000);}
-rd::Selector Robot::Auton::selector (
-    {
-        {"this", placeholder}
-    }
-);
 
 const void Robot::Auton::Tuning::TuningLogicLoop() {
     AutonTuning.focus();
@@ -157,7 +122,7 @@ const void Robot::Auton::Tuning::TuningLogicLoop() {
             master.clear_line(1);
             AutonTuning.printf("Running auton...");
             master.print(1, 1, "Running auton");
-            selector.run_auton();
+            Tuningselector.run_auton();
         }else {
             AutonTuning.printf("\n");
             master.clear_line(1);
@@ -174,5 +139,5 @@ const void Robot::Auton::Tuning::TuningLogicLoop() {
             save_value("latD", LatD);
         }
     }
-    selector.focus();
+    Tuningselector.focus();
 }
