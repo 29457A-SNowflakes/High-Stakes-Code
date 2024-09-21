@@ -34,7 +34,7 @@ void Robot::Init::initPIDs() {
 	chassis.changeLatI(LatI);
 	chassis.changeLatD(LatD);
 }
-void Robot::Init::initDriveCurves() {}; // TODO implement
+void Robot::Init::initDriveCurves() {};
 
 void Robot::Init::initAll() {
     initPIDs();

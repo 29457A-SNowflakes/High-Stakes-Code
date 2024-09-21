@@ -20,6 +20,9 @@ float utils::load_value(std::string name) {
 
     FILE* value_file = fopen(fullPath.c_str(), "r");
 
+    if (value_file == nullptr) {
+        return 0;
+    }
     char buf[50];
     fread(buf, 1, 50, value_file);
     fclose(value_file);

@@ -32,6 +32,12 @@ class Robot {
                         static lemlib::ControllerSettings latController;
                         static lemlib::ControllerSettings angularController;
 
+                        //TODO (non-urgent)
+                        static const void DriveCurveTuning();
+                        static lemlib::ExpoDriveCurve driveCurveLateral;
+                        static lemlib::ExpoDriveCurve driveCurveAngular;
+                        //--
+
                     static rd::Selector Tuningselector;
                 };
             // ...
@@ -39,8 +45,9 @@ class Robot {
         class Motors {
             public:
                 static const lemlib::Drivetrain drivetrain;
-                static const pros::Motor Intake1st;
-                static const pros::Motor Intake2nd;
+                static pros::Motor Intake1st;
+                static pros::Motor Intake2nd;
+                static pros::MotorGroup fullIntake;
                 static bool DTDirection;
             protected:
                 static pros::MotorGroup leftMotors;
@@ -56,23 +63,21 @@ class Robot {
         };
         class Pneumatics {
             public:
-                static pros::adi::DigitalOut mogo;
-                static bool mogoExtended;
-                static pros::adi::DigitalOut intakeElevator; //TODO implement
-                static bool intakeElevatorExtended; //TODO implement
+                static pros::adi::Pneumatics mogoMech;
+                static pros::adi::Pneumatics intakeLifter;
+                static pros::adi::Pneumatics doinker;   
         };
         class Actions {
             public:
-                static void toggleMogo();
-                static void setMogo(bool extended);
-                static void setMogoFor (bool extended, float time, bool async=false);
+                static void setMogoFor (bool extended, float time, bool async=true);
 
-                static void setIntake(int direction, IntakeActionType stage); //TODO implement
-                static void runIntakeFor(int direction, IntakeActionType stage, float time, bool async = false); //TODO implement
+                static void setIntake(int direction, IntakeActionType stage);
+                static void runIntakeFor(int direction, IntakeActionType stage, float time, bool async = true);
 
-                static void toggleIntakeElevator(); //TODO implement
-                static void setIntakeElevator(bool extended); //TODO implement
-                static void setIntakeElevatorFor(bool extended, float time, bool async=false); //TODO implement
+
+                static void setIntakeLifterFor(bool extended, float time, bool async=true);
+
+                static void jiggle(float time);
 
         };
         class Init {
@@ -82,7 +87,7 @@ class Robot {
                 static void initPIDs();
                 static void initDriveCurves();
         };
-        class Logging {};
+        class Logging {/* WIP */};
         static pros::Controller master;
         static lemlib::Chassis chassis;
 };

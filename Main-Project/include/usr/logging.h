@@ -5,6 +5,8 @@
 #include "pros/motors.hpp"
 #include <vector>
 
+
+//* WIP DO NOT USE
 namespace Logging {
 
     class MotorLogger {

@@ -65,49 +65,49 @@ const void Robot::Auton::Tuning::TuningLogicLoop() {
         if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
             switch (index) {
                 case 0:
-                    AngularP -= step;
+                    AngularP = ((int)(AngularP*100))-((int)(step*100))/100;
                     break;
                 case 1:
-                    AngularI -= step;
+                    AngularI = ((int)(AngularI*100))-((int)(step*100))/100;
                     break;
                 case 2:
-                    AngularD -= step;
+                    AngularD = ((int)(AngularD*100))-((int)(step*100))/100;
                     break;
                 case 3:
-                    LatP -= step;
+                    LatP = ((int)(LatP*100))-((int)(step*100))/100;
                     break;
                 case 4:
-                    LatI -= step;
+                    LatI = ((int)(LatI*100))-((int)(step*100))/100;
                     break;
                 case 5:
-                    LatD -= step;
+                    LatD = ((int)(LatD*100))-((int)(step*100))/100;
                     break;
                 case 6:
-                    step -= 0.01;
+                    step = (((int)(step*100))-1)/100;
                     break;
             }
         } else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             switch (index) {
                 case 0:
-                    AngularP += step;
+                    AngularP = ((int)(AngularP*100))+((int)(step*100))/100;
                     break;
                 case 1:
-                    AngularI += step;
+                    AngularI = ((int)(AngularI*100))+((int)(step*100))/100;
                     break;
                 case 2:
-                    AngularD += step;
+                    AngularD = ((int)(AngularD*100))+((int)(step*100))/100;
                     break;
                 case 3:
-                    LatP += step;
+                    LatP = ((int)(LatP*100))+((int)(step*100))/100;
                     break;
                 case 4:
-                    LatI += step;
+                    LatI = ((int)(LatI*100))+((int)(step*100))/100;
                     break;
                 case 5:
-                    LatD += step;
+                    LatD = ((int)(LatD*100))+((int)(step*100))/100;
                     break;
                 case 6:
-                    step += 0.01;
+                    step = (((int)(step*100))+1)/100;
                     break;
             }
         }
