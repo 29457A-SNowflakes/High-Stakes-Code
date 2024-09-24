@@ -41,7 +41,13 @@ rd::Selector Robot::Auton::Tuning::Tuningselector (
         {"Cricle (exp.)", Autons::Testers::circle}
     }
 );
-
+rd::Selector Robot::Auton::autonSelectorMain (
+    {
+        {"Support", Autons::support},
+        {"Support w/ Ladder", Autons::supportTouchLadder},
+        {"Rush", Autons::rush}
+    }
+);
 Motor Robot::Motors::Intake1st (-11, v5::MotorGears::blue, v5::MotorUnits::rotations);
 Motor Robot::Motors::Intake2nd (9, v5::MotorGears::blue, v5::MotorUnits::rotations);
 MotorGroup Robot::Motors::fullIntake ({-11, 9}, v5::MotorGears::blue, v5::MotorEncoderUnits::rotations);

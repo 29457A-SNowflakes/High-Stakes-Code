@@ -1,7 +1,7 @@
 
 
 #include <string>
-namespace utils {
-    void save_value(std::string name, float value);
-    float load_value (std::string name);
+namespace utils { // namespaces for utils
+    void save_value(std::string name, float value); // saves float to file on sd card
+    float load_value (std::string name); // loads float from file on sd card
 }

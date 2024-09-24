@@ -1,5 +1,6 @@
 #include "main.h"
 #include "pros/misc.h"
+#include "pros/misc.hpp"
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "usr/utils.h"
@@ -10,11 +11,12 @@ using namespace utils;
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
- */
+*/
 
 #include "nlohmann/json.hpp"
 #include "pros/apix.h"
 void initialize() {
+	/*
 	pros::c::serctl(SERCTL_DISABLE_COBS, nullptr);
 	pros::Task task ([=] {
 		while (true) {
@@ -27,6 +29,7 @@ void initialize() {
 			pros::delay(10);
 		}
 	});
+	*/
 	Robot::Init::initAll();
 	Robot::Auton::Tuning::TuningLogicLoop();
 }
@@ -60,7 +63,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	Robot::Auton::autonSelectorMain.run_auton();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -76,5 +81,27 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	std::cout << "here!!";
+	while (true) {
+		pros::delay(20);
+		int leftX = Robot::master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
+		int leftY = Robot::master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+		Robot::chassis.curvature(leftY, leftX);
+
+		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+			Robot::Pneumatics::mogoMech.toggle();
+		}
+		if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+			Robot::Actions::setIntake(-1, Types::BOTH);
+		} else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+			Robot::Actions::setIntake(1, Types::BOTH);
+		} else Robot::Actions::setIntake(0, Types::BOTH);
+
+		if (
+			Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
+			Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP) &&
+			!pros::competition::is_connected()
+		){
+			autonomous();
+		}
+	}
 }

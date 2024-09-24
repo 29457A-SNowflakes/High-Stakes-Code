@@ -1,3 +1,4 @@
+// includes ---
 #include "api.h"
 #include "lemlib/api.hpp"
 #include "lemlib/chassis/chassis.hpp"
@@ -10,10 +11,11 @@
 #include "robodash/core.h"
 #include "robodash/views/console.hpp"
 #include "robodash/views/selector.hpp"
-
+// ---
 
 
 namespace Types {
+    // specifies how intake is actuated
     enum IntakeActionType {
         BOTH,
         FIRST,
@@ -23,9 +25,9 @@ namespace Types {
 using namespace Types;
 class Robot {
     public:
-        class Auton {
+        class Auton { // contains autons
             public:
-                class Tuning {
+                class Tuning {  // contains functions to tune autonomous (PID) values
                     public:
                         static rd::Console AutonTuning;
                         static const void TuningLogicLoop();
@@ -38,22 +40,22 @@ class Robot {
                         static lemlib::ExpoDriveCurve driveCurveAngular;
                         //--
 
-                    static rd::Selector Tuningselector;
+                        static rd::Selector Tuningselector; // selector for test autons
                 };
-            // ...
+            static rd::Selector autonSelectorMain; // selector for game autons
         };
-        class Motors {
+        class Motors { // contains all motor-based variables
             public:
                 static const lemlib::Drivetrain drivetrain;
                 static pros::Motor Intake1st;
                 static pros::Motor Intake2nd;
                 static pros::MotorGroup fullIntake;
-                static bool DTDirection;
+                static bool DTDirection; // direction of 'forward' for drivetrain (not implemented)
             protected:
                 static pros::MotorGroup leftMotors;
                 static pros::MotorGroup rightMotors;
         };
-        class Sensors {
+        class Sensors { // class for sensors
             public:
                 static lemlib::OdomSensors sensors;
                 static pros::IMU imu;
@@ -61,13 +63,13 @@ class Robot {
                 static lemlib::TrackingWheel verticalTracking;
                 static lemlib::TrackingWheel horizontalTracking;
         };
-        class Pneumatics {
+        class Pneumatics { // class for pneumatics
             public:
                 static pros::adi::Pneumatics mogoMech;
                 static pros::adi::Pneumatics intakeLifter;
                 static pros::adi::Pneumatics doinker;   
         };
-        class Actions {
+        class Actions { // contains macros/actions for robot
             public:
                 static void setMogoFor (bool extended, float time, bool async=true);
 
@@ -77,10 +79,10 @@ class Robot {
 
                 static void setIntakeLifterFor(bool extended, float time, bool async=true);
 
-                static void jiggle(float time);
+                static void jiggle(float time); // jiggles robot (may be useful?)
 
         };
-        class Init {
+        class Init { // intializer functions
             public:
                 static void initAll();
             protected:
@@ -88,6 +90,6 @@ class Robot {
                 static void initDriveCurves();
         };
         class Logging {/* WIP */};
-        static pros::Controller master;
-        static lemlib::Chassis chassis;
+        static pros::Controller master; // controller
+        static lemlib::Chassis chassis; // main chassis
 };

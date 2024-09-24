@@ -1,4 +1,5 @@
 #include "lemlib/chassis/chassis.hpp"
+#include "robodash/views/selector.hpp"
 #include "usr/robot.h"
 #include "api.h"
 #include "lemlib/api.hpp"
@@ -14,6 +15,10 @@ void calibrate () {
 void Autons::Testers::forward24() {
     calibrate();
     Robot::chassis.moveToPoint(0, 24, 1000);
+    Robot::chassis.waitUntilDone();
+}void Autons::Testers::forward72(){
+    calibrate();
+    Robot::chassis.moveToPoint(0, 72, 1400);
     Robot::chassis.waitUntilDone();
 }
 void Autons::Testers::turn90() {
