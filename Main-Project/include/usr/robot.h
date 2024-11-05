@@ -15,16 +15,19 @@
 // ---
 
 
-namespace Types {
-    // specifies how intake is actuated
-    enum IntakeActionType {
-        BOTH,
-        FIRST,
-        SECOND
-    };
-}
-using namespace Types;
-class Robot {
+/*
+!   DEPRACATED -- 11w motor
+*   namespace Types {
+*       // specifies how intake is actuated
+*       enum IntakeActionType {
+*           BOTH,
+*           FIRST,
+*           SECOND
+*       };
+*   }
+*   using namespace Types;
+*/
+class Robot { 
     public:
         class Auton { // contains autons
             public:
@@ -49,10 +52,7 @@ class Robot {
             public:
                 static pros::Task intakeTask;
                 static const lemlib::Drivetrain drivetrain;
-                static pros::Motor Intake1st;
-                static pros::Motor Intake2nd;
-                static pros::MotorGroup fullIntake;
-                static bool DTDirection; // direction of 'forward' for drivetrain (not implemented)
+                static pros::Motor Intake;
             protected:
                 static pros::MotorGroup leftMotors;
                 static pros::MotorGroup rightMotors;
@@ -61,22 +61,19 @@ class Robot {
             public:
                 static lemlib::OdomSensors sensors;
                 static pros::IMU imu;
-            protected:
-                static lemlib::TrackingWheel verticalTracking;
-                static lemlib::TrackingWheel horizontalTracking;
         };
         class Pneumatics { // class for pneumatics
             public:
                 static pros::adi::Pneumatics mogoMech;
-                static pros::adi::Pneumatics intakeLifter;
-                static pros::adi::Pneumatics doinker;   
+                static pros::adi::Pneumatics intakeLifter;// not yet implemented
+                static pros::adi::Pneumatics doinker;   // not yet implemented
         };
         class Actions { // contains macros/actions for robot
             public:
                 static void setMogoFor (bool extended, float time, bool async=true);
 
-                static void setIntake(int direction, IntakeActionType stage);
-                static void runIntakeFor(int direction, IntakeActionType stage, float time, bool async = true);
+                static void setIntake(int direction);
+                static void runIntakeFor(int direction, float time, bool async = true);
 
 
                 static void setIntakeLifterFor(bool extended, float time, bool async=true);

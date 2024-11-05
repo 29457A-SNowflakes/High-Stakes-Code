@@ -52,11 +52,9 @@ rd::Selector Robot::Auton::autonSelectorMain (
         {"Rush B", Autons::rushBlue}
     }
 );
-Motor Robot::Motors::Intake1st (-11, v5::MotorGears::blue, v5::MotorUnits::rotations);
-Motor Robot::Motors::Intake2nd (9, v5::MotorGears::blue, v5::MotorUnits::rotations);
-MotorGroup Robot::Motors::fullIntake ({-11, 9}, v5::MotorGears::blue, v5::MotorEncoderUnits::rotations);
+Motor Robot::Motors::Intake (1, v5::MotorGears::blue, v5::MotorUnits::rotations);
 
-bool Robot::Motors::DTDirection = true; // Defualt direction is forwards
+
 
 //* Left motors on ports 10, 9, 8; Rights on 1, 2, 3; Using blue cartridges
 MotorGroup Robot::Motors::leftMotors (
@@ -71,7 +69,8 @@ MotorGroup Robot::Motors::rightMotors (
 );
 ExpoDriveCurve Robot::Auton::Tuning::driveCurveLateral (15, 6, 1.004);
 ExpoDriveCurve Robot::Auton::Tuning::driveCurveAngular (4, 6, 1.014);
-//* Drivetrain with track width 13.1'', Geard (down) for 450rpm, using horizontal drift of 8 due to traction wheel usage
+
+//* Drivetrain with track width 13.1'', Geard (down) for 450rpm, using horizontal drift of 6 due to traction wheel usage
 //TODO Measure dimensions
 const Drivetrain Robot::Motors::drivetrain(
     &leftMotors,
@@ -82,20 +81,14 @@ const Drivetrain Robot::Motors::drivetrain(
     6
 );
 
-adi::Pneumatics Robot::Pneumatics::mogoMech {'E', false};
-adi::Pneumatics Robot::Pneumatics::intakeLifter {'H', false};
+adi::Pneumatics Robot::Pneumatics::mogoMech {'H', false};
+adi::Pneumatics Robot::Pneumatics::intakeLifter {'H', false}; // not built
 adi::Pneumatics Robot::Pneumatics::doinker {'F', false}; // not built
 
 Imu Robot::Sensors::imu (12); // IMU on port 12
 
-adi::Encoder horiEncoder('A', 'B', true);
-adi::Encoder vertEncoder('C', 'D');
 
-//TODO measure distances
-TrackingWheel Robot::Sensors::verticalTracking (&vertEncoder, Omniwheel::NEW_275_HALF, 0);
-TrackingWheel Robot::Sensors::horizontalTracking (&horiEncoder, Omniwheel::NEW_275_HALF, 0);
-
-OdomSensors Robot::Sensors::sensors (&verticalTracking, nullptr, &horizontalTracking, nullptr, &imu);
+OdomSensors Robot::Sensors::sensors (nullptr, nullptr, nullptr, nullptr, &imu);
 
 lemlib::Chassis Robot::chassis (
     Motors::drivetrain,
