@@ -31,7 +31,7 @@ void initialize() {
 	});
 	*/
 	Robot::Init::initAll();
-	Robot::Auton::Tuning::TuningLogicLoop();
+	// * Robot::Auton::Tuning::TuningLogicLoop(); <- finished tuning PIDs
 }
 
 /**
@@ -95,6 +95,14 @@ void opcontrol() {
 		} else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
 			Robot::Actions::setIntake(1, Types::BOTH);
 		} else Robot::Actions::setIntake(0, Types::BOTH);
+
+		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+			Robot::Pneumatics::intakeLifter.toggle();
+		}
+
+		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
+			Robot::Pneumatics::doinker.toggle();
+		}
 
 		if (
 			Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&

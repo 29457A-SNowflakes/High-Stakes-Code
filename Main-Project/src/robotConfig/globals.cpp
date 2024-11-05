@@ -43,9 +43,13 @@ rd::Selector Robot::Auton::Tuning::Tuningselector (
 );
 rd::Selector Robot::Auton::autonSelectorMain (
     {
+        {"SKILLS", Autons::Skills::skillsRun},
         {"Support", Autons::support},
         {"Support w/ Ladder", Autons::supportTouchLadder},
-        {"Rush", Autons::rush}
+        {"Support Blue", Autons::supportBlue},
+        {"Support B w/ Ladder", Autons::supportTouchLadderBlue},
+        {"Rush", Autons::rush},
+        {"Rush B", Autons::rushBlue}
     }
 );
 Motor Robot::Motors::Intake1st (-11, v5::MotorGears::blue, v5::MotorUnits::rotations);
@@ -65,8 +69,8 @@ MotorGroup Robot::Motors::rightMotors (
     MotorGears::blue,
     MotorUnits::degrees
 );
-ExpoDriveCurve Robot::Auton::Tuning::driveCurveLateral (4, 6, 1.004);
-ExpoDriveCurve Robot::Auton::Tuning::driveCurveAngular (4, 6, 1.016);
+ExpoDriveCurve Robot::Auton::Tuning::driveCurveLateral (15, 6, 1.004);
+ExpoDriveCurve Robot::Auton::Tuning::driveCurveAngular (4, 6, 1.014);
 //* Drivetrain with track width 13.1'', Geard (down) for 450rpm, using horizontal drift of 8 due to traction wheel usage
 //TODO Measure dimensions
 const Drivetrain Robot::Motors::drivetrain(
@@ -79,13 +83,13 @@ const Drivetrain Robot::Motors::drivetrain(
 );
 
 adi::Pneumatics Robot::Pneumatics::mogoMech {'E', false};
-adi::Pneumatics Robot::Pneumatics::intakeLifter {'G', true}; // not built
-adi::Pneumatics Robot::Pneumatics::doinker {'h', false}; // not built
+adi::Pneumatics Robot::Pneumatics::intakeLifter {'H', false};
+adi::Pneumatics Robot::Pneumatics::doinker {'F', false}; // not built
 
-Imu Robot::Sensors::imu (21); // IMU on port ?
+Imu Robot::Sensors::imu (12); // IMU on port 12
 
-adi::Encoder vertEncoder('A', 'B');
-adi::Encoder horiEncoder('C', 'D');
+adi::Encoder horiEncoder('A', 'B', true);
+adi::Encoder vertEncoder('C', 'D');
 
 //TODO measure distances
 TrackingWheel Robot::Sensors::verticalTracking (&vertEncoder, Omniwheel::NEW_275_HALF, 0);

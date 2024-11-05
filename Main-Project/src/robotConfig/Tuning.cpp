@@ -65,49 +65,49 @@ const void Robot::Auton::Tuning::TuningLogicLoop() {
         if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
             switch (index) {
                 case 0:
-                    AngularP = ((int)(AngularP*100))-((int)(step*100))/100;
+                    AngularP -= step;
                     break;
                 case 1:
-                    AngularI = ((int)(AngularI*100))-((int)(step*100))/100;
+                    AngularI -= step;
                     break;
                 case 2:
-                    AngularD = ((int)(AngularD*100))-((int)(step*100))/100;
+                    AngularD -= step;
                     break;
                 case 3:
-                    LatP = ((int)(LatP*100))-((int)(step*100))/100;
+                    LatP -= step;
                     break;
                 case 4:
-                    LatI = ((int)(LatI*100))-((int)(step*100))/100;
+                    LatI -= step;
                     break;
                 case 5:
-                    LatD = ((int)(LatD*100))-((int)(step*100))/100;
+                    LatD -= step;
                     break;
                 case 6:
-                    step = (((int)(step*100))-1)/100;
+                    step -= 0.01;
                     break;
             }
         } else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             switch (index) {
                 case 0:
-                    AngularP = ((int)(AngularP*100))+((int)(step*100))/100;
+                    AngularP += step;
                     break;
                 case 1:
-                    AngularI = ((int)(AngularI*100))+((int)(step*100))/100;
+                    AngularI += step;
                     break;
                 case 2:
-                    AngularD = ((int)(AngularD*100))+((int)(step*100))/100;
+                    AngularD += step;
                     break;
                 case 3:
-                    LatP = ((int)(LatP*100))+((int)(step*100))/100;
+                    LatP += step;
                     break;
                 case 4:
-                    LatI = ((int)(LatI*100))+((int)(step*100))/100;
+                    LatI += step;
                     break;
                 case 5:
-                    LatD = ((int)(LatD*100))+((int)(step*100))/100;
+                    LatD += step;
                     break;
                 case 6:
-                    step = (((int)(step*100))+1)/100;
+                    step += -0.01;
                     break;
             }
         }
@@ -139,5 +139,5 @@ const void Robot::Auton::Tuning::TuningLogicLoop() {
             save_value("latD", LatD);
         }
     }
-    Tuningselector.focus();
+    Robot::Auton::autonSelectorMain.focus();
 }

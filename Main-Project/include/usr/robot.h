@@ -7,6 +7,7 @@
 #include "pros/imu.hpp"
 #include "pros/motor_group.hpp"
 #include "pros/motors.hpp"
+#include "pros/rtos.hpp"
 #include "robodash/api.h"
 #include "robodash/core.h"
 #include "robodash/views/console.hpp"
@@ -46,6 +47,7 @@ class Robot {
         };
         class Motors { // contains all motor-based variables
             public:
+                static pros::Task intakeTask;
                 static const lemlib::Drivetrain drivetrain;
                 static pros::Motor Intake1st;
                 static pros::Motor Intake2nd;

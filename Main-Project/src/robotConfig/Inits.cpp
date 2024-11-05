@@ -40,5 +40,13 @@ void Robot::Init::initAll() {
     initPIDs();
     pros::delay(50);
     chassis.calibrate();
-    pros::delay(2000);
+    Robot::Auton::autonSelectorMain.focus();
+    pros::Task mogoWatcher ([=] {
+        while (true) {
+            pros::delay(250);
+            Robot::master.clear_line(1);
+            Robot::master.print(1, 1, "%s", Robot::Pneumatics::mogoMech.is_extended() ? "0":"1");
+        }
+    });
+    pros::delay(1500);
 }

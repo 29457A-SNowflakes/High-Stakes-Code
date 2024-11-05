@@ -14,5 +14,12 @@ namespace Autons {
     void supportTouchLadder();
     void support();
     void rush();
+    void supportBlue();
+    void supportTouchLadderBlue();
+    void rushBlue();
+    class Skills {
+        public:
+            static void skillsRun();
+    };
     // TODO: more?
 }
