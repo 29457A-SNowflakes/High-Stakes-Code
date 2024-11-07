@@ -17,24 +17,19 @@ void Robot::Actions::setMogoFor(bool extended, float time, bool async) {
     delay(time);
     Pneumatics::mogoMech.toggle();
 }
-void Robot::Actions::setIntake(int direction, IntakeActionType stage) {
-    int volts = 12000 * direction;
-    if (stage==IntakeActionType::FIRST || stage == IntakeActionType::BOTH) {
-        Motors::Intake1st.move_voltage(volts);
-    }
-    if (stage==IntakeActionType::SECOND || stage == IntakeActionType::BOTH) {
-        Motors::Intake2nd.move_voltage(volts);
-    }
+void Robot::Actions::setIntake(int direction) {
+    int move = 127 * direction;
+    Motors::Intake.move_voltage(move);
 }
-void Robot::Actions::runIntakeFor(int direction, IntakeActionType stage, float time, bool async) {
+void Robot::Actions::runIntakeFor(int direction, float time, bool async) {
     if (async) {
-        Task t ([=] {runIntakeFor(direction, stage, time, false);});
+        Task t ([=] {runIntakeFor(direction, time, false);});
         delay(10);
         return;
     }
-    setIntake(direction, stage);
+    setIntake(direction);
     delay(time);
-    setIntake(0, stage);
+    setIntake(0);
 }
 void Robot::Actions::setIntakeLifterFor(bool extended, float time, bool async){
     if (async) {

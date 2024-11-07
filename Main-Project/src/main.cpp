@@ -91,10 +91,10 @@ void opcontrol() {
 			Robot::Pneumatics::mogoMech.toggle();
 		}
 		if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			Robot::Actions::setIntake(-1, Types::BOTH);
+			Robot::Actions::setIntake(-1);
 		} else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			Robot::Actions::setIntake(1, Types::BOTH);
-		} else Robot::Actions::setIntake(0, Types::BOTH);
+			Robot::Actions::setIntake(1);
+		} else Robot::Actions::setIntake(0);
 
 		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
 			Robot::Pneumatics::intakeLifter.toggle();

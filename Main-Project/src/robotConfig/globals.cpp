@@ -52,7 +52,7 @@ rd::Selector Robot::Auton::autonSelectorMain (
         {"Rush B", Autons::rushBlue}
     }
 );
-Motor Robot::Motors::Intake (1, v5::MotorGears::blue, v5::MotorUnits::rotations);
+Motor Robot::Motors::Intake (-1, v5::MotorGears::blue, v5::MotorUnits::rotations);
 
 
 

@@ -64,7 +64,7 @@ void Autons::support() {
     delay(200);
     // move towads ring while intaking
     chassis->turnToPoint(-24, 48, 500);
-    Robot::Actions::setIntake(1, Types::BOTH);
+    Robot::Actions::setIntake(1);
     chassis->moveToPoint(-24.5, 46, 1000, {.maxSpeed=90, .minSpeed=40});
     // move back slightly to help with intaking
     chassis->moveToPoint(-23, 44, 750, {.forwards=false});
@@ -88,7 +88,7 @@ void Autons::support() {
     chassis->moveToPose(-10, 48, 180, 1000, {.forwards=false});
     // move towards ladder (helps w/ AWP)
     chassis->moveToPose(-24, 24, 170, 3000);
-    Robot::Actions::runIntakeFor(1, BOTH, 2500, true);
+    Robot::Actions::runIntakeFor(1, 2500, true);
     chassis->waitUntilDone();
     return;
 }
@@ -122,14 +122,14 @@ void Autons::rush(){
     Robot::Pneumatics::mogoMech.extend();
     delay(200);
     // run intake from now to score rings (including preload)
-    Robot::Actions::setIntake(1, BOTH);
+    Robot::Actions::setIntake(1);
     // turn to first ring and suck up
     chassis->turnToPoint(22, 47, 500);
     chassis->moveToPoint(25, 47, 900);
     delay(400);
     Robot::Pneumatics::mogoMech.retract();
     chassis->waitUntilDone();
-    Robot::Actions::runIntakeFor(1, BOTH, 500, false);
+    Robot::Actions::runIntakeFor(1, 500, false);
     // drop mogo and move to next
     chassis->moveToPoint(24, 36, 2000);
     chassis->moveToPose(24, 26, 0, 2500, {.forwards=false});
@@ -140,7 +140,7 @@ void Autons::rush(){
     // turn to and move towards next ring with intake raised
     chassis->turnToPoint(48, 0, 1000, {.minSpeed=90});
     delay(100);
-    Robot::Actions::setIntake(1, BOTH);
+    Robot::Actions::setIntake(1);
     chassis->waitUntilDone();
     delay(500);
     Robot::Pneumatics::intakeLifter.extend();
@@ -156,7 +156,7 @@ void Autons::rush(){
     chassis->moveToPoint(12, 3, 1000, {.maxSpeed=60});
     chassis->waitUntilDone();
     Robot::master.print(1, 1, "%f", (millis()-start)/1000);
-    Robot::Actions::runIntakeFor(1, BOTH, 10000, false);
+    Robot::Actions::runIntakeFor(1, 10000, false);
     return;
 
 }
@@ -183,14 +183,14 @@ void Autons::rushBlue(){
     Robot::Pneumatics::mogoMech.extend();
     delay(200);
     // run intake from now to score rings (including preload)
-    Robot::Actions::setIntake(1, BOTH);
+    Robot::Actions::setIntake(1);
     // turn to first ring and suck up
     chassis->turnToPoint(-22, 47, 500);
     chassis->moveToPoint(-25, 47, 900);
     delay(400);
     Robot::Pneumatics::mogoMech.retract();
     chassis->waitUntilDone();
-    Robot::Actions::runIntakeFor(1, BOTH, 500, false);
+    Robot::Actions::runIntakeFor(1, 500, false);
     // drop mogo and move to next
     chassis->moveToPoint(-24, 36, 2000);
     chassis->moveToPose(-24, 26, 0, 2500, {.forwards=false});
@@ -201,7 +201,7 @@ void Autons::rushBlue(){
     // turn to and move towards next ring with intake raised
     chassis->turnToPoint(-48, 0, 1000, {.minSpeed=90});
     delay(100);
-    Robot::Actions::setIntake(1, BOTH);
+    Robot::Actions::setIntake(1);
     chassis->waitUntilDone();
     delay(500);
     Robot::Pneumatics::intakeLifter.extend();
@@ -217,7 +217,7 @@ void Autons::rushBlue(){
     chassis->moveToPoint(-12, 3, 1000, {.maxSpeed=60});
     chassis->waitUntilDone();
     Robot::master.print(1, 1, "%f", (millis()-start)/1000);
-    Robot::Actions::runIntakeFor(1, BOTH, 10000, false);
+    Robot::Actions::runIntakeFor(1, 10000, false);
     return;
 
 }
@@ -235,7 +235,7 @@ void Autons::supportBlue() {
     delay(200);
     // move towads ring while intaking
     chassis->turnToPoint(24, 48, 500);
-    Robot::Actions::setIntake(1, Types::BOTH);
+    Robot::Actions::setIntake(1);
     chassis->moveToPoint(24.5, 46, 1000, {.maxSpeed=90, .minSpeed=40});
     // move back slightly to help with intaking
     chassis->moveToPoint(23, 44, 750, {.forwards=false});
@@ -259,7 +259,7 @@ void Autons::supportBlue() {
     chassis->moveToPose(10, 48, 180, 1000, {.forwards=false});
     // move towards ladder (helps w/ AWP)
     chassis->moveToPose(24, 24, 190, 3000);
-    Robot::Actions::runIntakeFor(1, BOTH, 2500, true);
+    Robot::Actions::runIntakeFor(1, 2500, true);
     chassis->waitUntilDone();
     return;
 }
@@ -273,13 +273,13 @@ void Autons::supportTouchLadderBlue(){
 void Autons::Skills::skillsRun() {
     if (!pros::competition::is_autonomous()) calibrate();
     chassis->setPose(-60, 0, 270);
-    Robot::Actions::runIntakeFor(1, Types::BOTH, 1000, false);
+    Robot::Actions::runIntakeFor(1, 1000, false);
     chassis->turnToPoint(-48, -24, 750, {.forwards=false});
     chassis->moveToPoint(-52, 50, 1000, {.forwards=false});
     chassis->waitUntilDone();
     Robot::Pneumatics::mogoMech.extend();
     delay(350);
-    Robot::Actions::setIntake(1, BOTH);
+    Robot::Actions::setIntake(1);
     chassis->moveToPoint(-24, -24, 1400);
     chassis->moveToPoint(-24, -48, 1000);
     
