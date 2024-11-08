@@ -3,6 +3,7 @@
 #include "lemlib/api.hpp"
 #include "lemlib/chassis/chassis.hpp"
 #include "lemlib/chassis/trackingWheel.hpp"
+#include "lemlib/pid.hpp"
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
 #include "pros/motor_group.hpp"
@@ -15,18 +16,27 @@
 // ---
 
 
-/*
-!   DEPRACATED -- 11w motor
-*   namespace Types {
-*       // specifies how intake is actuated
-*       enum IntakeActionType {
-*           BOTH,
-*           FIRST,
-*           SECOND
-*       };
-*   }
-*   using namespace Types;
-*/
+namespace Types {
+    // LB states
+    enum LBStates {
+        REST=0,
+        LOAD =30,
+        SCORE=100,
+    };
+    class LB_Macro {
+        public:
+            LBStates state;
+            bool async;
+            int timeout;
+            LB_Macro(LBStates toState, bool async_=true, int timeout_=10000){
+                state = toState;
+                async = async_;
+                timeout = timeout_;
+            }
+    };
+};
+using namespace Types;
+
 class Robot { 
     public:
         class Auton { // contains autons
@@ -45,7 +55,9 @@ class Robot {
                         //--
 
                         static rd::Selector Tuningselector; // selector for test autons
+
                 };
+                static lemlib::PID LB_PID;
             static rd::Selector autonSelectorMain; // selector for game autons
         };
         class Motors { // contains all motor-based variables
@@ -53,6 +65,7 @@ class Robot {
                 static pros::Task intakeTask;
                 static const lemlib::Drivetrain drivetrain;
                 static pros::Motor Intake;
+                static pros::Motor LB_Motor;
             protected:
                 static pros::MotorGroup leftMotors;
                 static pros::MotorGroup rightMotors;
@@ -61,6 +74,7 @@ class Robot {
             public:
                 static lemlib::OdomSensors sensors;
                 static pros::IMU imu;
+                static pros::adi::Button LB_Bumper;
         };
         class Pneumatics { // class for pneumatics
             public:
@@ -79,6 +93,14 @@ class Robot {
                 static void setIntakeLifterFor(bool extended, float time, bool async=true);
 
                 static void jiggle(float time); // jiggles robot (may be useful?)
+
+                class LB {
+                    public:
+                        static void runMacro(LB_Macro macro);
+                        static void queueMacro(LB_Macro macro);
+                    protected:
+                        static bool isRunningMacro;
+                };
 
         };
         class Init { // intializer functions

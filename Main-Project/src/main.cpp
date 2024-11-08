@@ -31,6 +31,8 @@ void initialize() {
 	});
 	*/
 	Robot::Init::initAll();
+	Robot::Motors::LB_Motor.tare_position();
+	Robot::Actions::LB::runMacro(LB_Macro(Types::LOAD, false, 5000));
 	// * Robot::Auton::Tuning::TuningLogicLoop(); <- finished tuning PIDs
 }
 
@@ -110,6 +112,14 @@ void opcontrol() {
 			!pros::competition::is_connected()
 		){
 			autonomous();
+		}
+		if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+			Robot::Motors::LB_Motor.move_velocity(200);
+		}
+		else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+			Robot::Motors::LB_Motor.move_velocity(-200);
+		} else {
+			Robot::Motors::LB_Motor.move_velocity(0);
 		}
 	}
 }

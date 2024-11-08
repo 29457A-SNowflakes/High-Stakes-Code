@@ -1,6 +1,7 @@
 #include "lemlib/chassis/chassis.hpp"
 #include "main.h"
 #include "lemlib/api.hpp"
+#include "pros/motors.h"
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "usr/utils.h"
@@ -38,6 +39,7 @@ void Robot::Init::initDriveCurves() {};
 
 void Robot::Init::initAll() {
     initPIDs();
+    Robot::Motors::LB_Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE); 
     pros::delay(50);
     chassis.calibrate();
     Robot::Auton::autonSelectorMain.focus();

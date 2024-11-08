@@ -3,6 +3,7 @@
 #include "pros/abstract_motor.hpp"
 #include "pros/adi.hpp"
 #include "pros/motor_group.hpp"
+#include "pros/motors.hpp"
 #include "usr/robot.h"
 #include "robodash/api.h"
 #include "usr/autons.h"
@@ -53,8 +54,9 @@ rd::Selector Robot::Auton::autonSelectorMain (
     }
 );
 Motor Robot::Motors::Intake (-1, v5::MotorGears::blue, v5::MotorUnits::rotations);
+Motor Robot::Motors::LB_Motor (17, pros::v5::MotorGears::green, pros::v5::MotorUnits::deg);
 
-
+lemlib::PID Robot::Auton::LB_PID(10, 0, 5);
 
 //* Left motors on ports 10, 9, 8; Rights on 1, 2, 3; Using blue cartridges
 MotorGroup Robot::Motors::leftMotors (

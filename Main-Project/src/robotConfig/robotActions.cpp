@@ -3,6 +3,7 @@
 #include "lemlib/api.hpp"
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
+#include <algorithm>
 
 using namespace pros;
 using namespace lemlib;
@@ -52,4 +53,44 @@ void Robot::Actions::jiggle(float time) {
         Robot::chassis.waitUntilDone();
         delay(200);
     }
+}
+
+
+
+
+void Robot::Actions::LB::runMacro(LB_Macro macro) {
+    if (macro.async) {
+        pros::Task t ([=] {runMacro(LB_Macro(macro.state, false, macro.timeout));});
+        delay(10);
+        return;
+    }
+    float t = millis();
+    float ratio = (float)12/(float)72;
+    float desired = 0;
+    switch (macro.state) {
+        case Types::REST:
+            desired = 0;
+            break;
+        case Types::LOAD:
+            desired = 30;
+            break;
+        case Types::SCORE:
+            desired = 100;
+            break;
+        default:
+            desired = 0;
+            break;
+    }
+    pros::Motor* LB = &Robot::Motors::LB_Motor;
+    lemlib::PID* pid = &Robot::Auton::LB_PID;
+    float error = desired - LB->get_position()/ratio;
+    while (error > 3 && millis()-t < macro.timeout){
+        delay(15);
+        error = desired-LB->get_position()/ratio;
+        float cmd = pid->update(error);
+        cmd = std::clamp<float>(cmd, -33, 33);
+        LB->move_velocity(cmd/ratio);
+    }
+    LB->move_velocity(0);
+    LB->brake();
 }
