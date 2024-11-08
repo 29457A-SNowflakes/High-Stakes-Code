@@ -121,5 +121,10 @@ void opcontrol() {
 		} else {
 			Robot::Motors::LB_Motor.move_velocity(0);
 		}
+
+
+		if (Robot::Sensors::LB_Bumper.get_value()) {
+			Robot::Motors::LB_Motor.tare_position();
+		}
 	}
 }

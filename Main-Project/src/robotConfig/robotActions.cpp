@@ -83,10 +83,10 @@ void Robot::Actions::LB::runMacro(LB_Macro macro) {
     }
     pros::Motor* LB = &Robot::Motors::LB_Motor;
     lemlib::PID* pid = &Robot::Auton::LB_PID;
-    float error = desired - LB->get_position()/ratio;
+    float error = desired - (LB->get_position() * ratio);
     while (error > 3 && millis()-t < macro.timeout){
         delay(15);
-        error = desired-LB->get_position()/ratio;
+        error = desired - (LB->get_position() * ratio);
         float cmd = pid->update(error);
         cmd = std::clamp<float>(cmd, -33, 33);
         LB->move_velocity(cmd/ratio);
