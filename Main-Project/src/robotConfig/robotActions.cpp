@@ -18,8 +18,7 @@ void Robot::Actions::setMogoFor(bool extended, float time, bool async) {
     Pneumatics::mogoMech.toggle();
 }
 void Robot::Actions::setIntake(int direction) {
-    int move = 127 * direction;
-    Motors::Intake.move_voltage(move);
+    Motors::Intake.move_velocity(600 * direction);
 }
 void Robot::Actions::runIntakeFor(int direction, float time, bool async) {
     if (async) {
