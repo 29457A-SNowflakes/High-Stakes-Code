@@ -60,12 +60,12 @@ lemlib::PID Robot::Auton::LB_PID(10, 0, 5);
 
 //* Left motors on ports 10, 9, 8; Rights on 1, 2, 3; Using blue cartridges
 MotorGroup Robot::Motors::leftMotors (
-    {-1, -2, -10},
+    {-20, -12, -12},
     MotorGears::blue,
     MotorUnits::degrees
 );
 MotorGroup Robot::Motors::rightMotors (
-    {14, 20, 18},
+    {4, 3, 2},
     MotorGears::blue,
     MotorUnits::degrees
 );
@@ -84,8 +84,8 @@ const Drivetrain Robot::Motors::drivetrain(
 );
 
 adi::Pneumatics Robot::Pneumatics::mogoMech {'H', false};
-adi::Pneumatics Robot::Pneumatics::intakeLifter {'H', false}; // not built
-adi::Pneumatics Robot::Pneumatics::doinker {'F', false}; // not built
+adi::Pneumatics Robot::Pneumatics::intakeLifter {'A', false}; // not built
+adi::Pneumatics Robot::Pneumatics::doinker {'B', false}; // not built
 
 Imu Robot::Sensors::imu (12); // IMU on port 12
 

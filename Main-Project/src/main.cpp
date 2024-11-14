@@ -32,7 +32,7 @@ void initialize() {
 	*/
 	Robot::Init::initAll();
 	Robot::Motors::LB_Motor.tare_position();
-	Robot::Actions::LB::runMacro(LB_Macro(Types::LOAD, false, 5000));
+	//Robot::Actions::LB::runMacro(LB_Macro(Types::LOAD, false, 5000));
 	// * Robot::Auton::Tuning::TuningLogicLoop(); <- finished tuning PIDs
 }
 
@@ -122,9 +122,10 @@ void opcontrol() {
 			Robot::Motors::LB_Motor.move_velocity(0);
 		}
 
-
+		/*
 		if (Robot::Sensors::LB_Bumper.get_value()) {
 			Robot::Motors::LB_Motor.tare_position();
 		}
+		*/
 	}
 }
