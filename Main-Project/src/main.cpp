@@ -4,6 +4,8 @@
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "usr/utils.h"
+#include <charconv>
+#include <cstdio>
 using namespace utils;
 
 /**
@@ -32,8 +34,7 @@ void initialize() {
 	*/
 	Robot::Init::initAll();
 	Robot::Motors::LB_Motor.tare_position();
-	//Robot::Actions::LB::runMacro(LB_Macro(Types::LOAD, false, 5000));
-	// * Robot::Auton::Tuning::TuningLogicLoop(); <- finished tuning PIDs
+	Robot::Auton::Tuning::TuningLogicLoop();
 }
 
 /**
@@ -82,7 +83,13 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
+bool LBisOverLimit () {
+	float ratio = (float)12/(float)72;
+	return Robot::Motors::LB_Motor.get_position()*ratio >= Robot::maxLB;
+}
 void opcontrol() {
+	Robot::Pneumatics::intakeLifter.set_value(false);
 	while (true) {
 		pros::delay(20);
 		int leftX = Robot::master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
@@ -102,30 +109,35 @@ void opcontrol() {
 			Robot::Pneumatics::intakeLifter.toggle();
 		}
 
-		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
+		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			Robot::Pneumatics::doinker.toggle();
 		}
 
 		if (
-			Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
+			Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) &&
 			Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP) &&
 			!pros::competition::is_connected()
 		){
 			autonomous();
 		}
-		if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+		if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && !LBisOverLimit()) {
 			Robot::Motors::LB_Motor.move_velocity(200);
 		}
-		else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+		else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && !Robot::Sensors::LB_Bumper.get_value()) {
 			Robot::Motors::LB_Motor.move_velocity(-200);
-		} else {
+		} else if (!Robot::Actions::LB::isRunningMacro) {
 			Robot::Motors::LB_Motor.move_velocity(0);
 		}
 
-		/*
-		if (Robot::Sensors::LB_Bumper.get_value()) {
+		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN) && !Robot::Actions::LB::isRunningMacro) {
+			Robot::Actions::LB::runMacro(LB_Macro (REST));
+		}
+		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y) && !Robot::Actions::LB::isRunningMacro) {
+			Robot::Actions::LB::runMacro(LB_Macro (LOAD));
+		}
+
+		if (!Robot::Sensors::LB_Bumper.get_value() && !Robot::Actions::LB::isRunningMacro) {
 			Robot::Motors::LB_Motor.tare_position();
 		}
-		*/
 	}
 }

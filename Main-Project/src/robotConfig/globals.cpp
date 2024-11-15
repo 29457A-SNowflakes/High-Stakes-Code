@@ -54,9 +54,16 @@ rd::Selector Robot::Auton::autonSelectorMain (
     }
 );
 Motor Robot::Motors::Intake (-1, v5::MotorGears::blue, v5::MotorUnits::rotations);
-Motor Robot::Motors::LB_Motor (17, pros::v5::MotorGears::green, pros::v5::MotorUnits::deg);
 
-lemlib::PID Robot::Auton::LB_PID(10, 0, 5);
+Motor Robot::Motors::LB_Motor (14, pros::v5::MotorGears::green, pros::v5::MotorUnits::deg);
+
+adi::Button Robot::Sensors::LB_Bumper ('D');
+
+bool Robot::Actions::LB::isRunningMacro = false;
+
+const float Robot::maxLB = 120;
+
+lemlib::PID Robot::Auton::LB_PID(5, 1, 7);
 
 //* Left motors on ports 10, 9, 8; Rights on 1, 2, 3; Using blue cartridges
 MotorGroup Robot::Motors::leftMotors (
@@ -84,10 +91,10 @@ const Drivetrain Robot::Motors::drivetrain(
 );
 
 adi::Pneumatics Robot::Pneumatics::mogoMech {'H', false};
-adi::Pneumatics Robot::Pneumatics::intakeLifter {'A', false}; // not built
+adi::Pneumatics Robot::Pneumatics::intakeLifter {'C', true}; // not built
 adi::Pneumatics Robot::Pneumatics::doinker {'B', false}; // not built
 
-Imu Robot::Sensors::imu (12); // IMU on port 12
+Imu Robot::Sensors::imu (17); // IMU on port 12
 
 
 OdomSensors Robot::Sensors::sensors (nullptr, nullptr, nullptr, nullptr, &imu);

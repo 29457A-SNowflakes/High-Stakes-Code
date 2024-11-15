@@ -27,19 +27,19 @@ void Robot::Init::initPIDs() {
     Auton::Tuning::angularController.kI = AngularI;
     Auton::Tuning::angularController.kD = AngularD;
         
-    chassis.changeAngularP(AngularP);
-    chassis.changeAngularI(AngularI);
-    chassis.changeAngularD(AngularD);
+    chassis.changeAngularP(10);
+    chassis.changeAngularI(0);
+    chassis.changeAngularD(5);
 	
-	chassis.changeLatP(LatP);
-	chassis.changeLatI(LatI);
-	chassis.changeLatD(LatD);
+	chassis.changeLatP(8);
+	chassis.changeLatI(0);
+	chassis.changeLatD(4);
 }
 void Robot::Init::initDriveCurves() {};
 
 void Robot::Init::initAll() {
     initPIDs();
-    Robot::Motors::LB_Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE); 
+    Robot::Motors::LB_Motor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD); 
     pros::delay(50);
     chassis.calibrate();
     Robot::Auton::autonSelectorMain.focus();

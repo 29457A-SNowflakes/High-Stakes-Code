@@ -28,7 +28,9 @@ namespace Types {
             LBStates state;
             bool async;
             int timeout;
-            LB_Macro(LBStates toState, bool async_=true, int timeout_=10000){
+            float maxSpeed;
+            float minSpeed;
+            LB_Macro(LBStates toState, bool async_=true, float maxSpeed_ =200, float minSpeed_=0, int timeout_=10000){
                 state = toState;
                 async = async_;
                 timeout = timeout_;
@@ -98,7 +100,6 @@ class Robot {
                     public:
                         static void runMacro(LB_Macro macro);
                         static void queueMacro(LB_Macro macro);
-                    protected:
                         static bool isRunningMacro;
                 };
 
@@ -113,4 +114,5 @@ class Robot {
         class Logging {/* WIP */};
         static pros::Controller master; // controller
         static lemlib::Chassis chassis; // main chassis
+        static const float maxLB;
 };

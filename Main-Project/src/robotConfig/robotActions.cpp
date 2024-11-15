@@ -1,9 +1,12 @@
 #include "lemlib/pose.hpp"
 #include "main.h"
 #include "lemlib/api.hpp"
+#include "pros/misc.h"
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include <algorithm>
+#include <cstdio>
+#include <string>
 
 using namespace pros;
 using namespace lemlib;
@@ -64,6 +67,7 @@ void Robot::Actions::LB::runMacro(LB_Macro macro) {
         delay(10);
         return;
     }
+    isRunningMacro = true;
     float t = millis();
     float ratio = (float)12/(float)72;
     float desired = 0;
@@ -72,7 +76,7 @@ void Robot::Actions::LB::runMacro(LB_Macro macro) {
             desired = 0;
             break;
         case Types::LOAD:
-            desired = 30;
+            desired = 13;
             break;
         case Types::SCORE:
             desired = 100;
@@ -83,14 +87,30 @@ void Robot::Actions::LB::runMacro(LB_Macro macro) {
     }
     pros::Motor* LB = &Robot::Motors::LB_Motor;
     lemlib::PID* pid = &Robot::Auton::LB_PID;
+    
+    if (macro.state == REST) {
+        while (!Robot::Sensors::LB_Bumper.get_value()) {
+            if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+                break;
+            }
+            LB->move_velocity(-175);
+            delay(20);
+        }
+        LB->move_velocity(0);
+        LB->brake();
+        isRunningMacro = false;
+        return;
+    }
     float error = desired - (LB->get_position() * ratio);
     while (error > 3 && millis()-t < macro.timeout){
+
         delay(15);
         error = desired - (LB->get_position() * ratio);
         float cmd = pid->update(error);
-        cmd = std::clamp<float>(cmd, -33, 33);
+            cmd = std::clamp<float>(cmd, -33, 33);
         LB->move_velocity(cmd/ratio);
     }
     LB->move_velocity(0);
     LB->brake();
+    isRunningMacro = false;
 }

@@ -100,6 +100,7 @@ void Autons::supportTouchLadder(){
     Robot::master.rumble("-");
 }
 void Autons::rush(){
+    calibrate(); //! remove for comps
     Robot::Pneumatics::mogoMech.retract(); // make sure mogo is not clamped.
     Robot::Pneumatics::intakeLifter.retract(); // make sure intake lifter is not lifted.
     Robot::Pneumatics::doinker.retract(); // make sure doinker is not out.
@@ -121,6 +122,7 @@ void Autons::rush(){
     // extend mogo clamp, and wait for settle
     Robot::Pneumatics::mogoMech.extend();
     delay(200);
+    return;
     // run intake from now to score rings (including preload)
     Robot::Actions::setIntake(1);
     // turn to first ring and suck up
