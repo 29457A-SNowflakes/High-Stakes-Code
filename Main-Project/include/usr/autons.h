@@ -12,12 +12,10 @@ namespace Autons {
             static void boomerang_24_24_90();
             static void circle();
     };
-    void supportTouchLadder();
-    void support();
-    void rush();
-    void supportBlue();
-    void supportTouchLadderBlue();
-    void rushBlue();
+    void greedyRed();
+    void greedyBlue();
+    void elimRed();
+    void elimBlue();
     class Skills {
         public:
             static void skillsRun();

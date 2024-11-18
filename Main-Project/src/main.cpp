@@ -34,7 +34,7 @@ void initialize() {
 	*/
 	Robot::Init::initAll();
 	Robot::Motors::LB_Motor.tare_position();
-	Robot::Auton::Tuning::TuningLogicLoop();
+	//Robot::Auton::Tuning::TuningLogicLoop();
 }
 
 /**
@@ -67,6 +67,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+	Robot::Pneumatics::intakeLifter.retract();
+	Robot::Pneumatics::doinker.retract();
 	Robot::Auton::autonSelectorMain.run_auton();
 }
 
@@ -100,10 +102,10 @@ void opcontrol() {
 			Robot::Pneumatics::mogoMech.toggle();
 		}
 		if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			Robot::Actions::setIntake(-1);
+			Robot::Motors::Intake.move(-127);
 		} else if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			Robot::Actions::setIntake(1);
-		} else Robot::Actions::setIntake(0);
+			Robot::Motors::Intake.move(127);
+		} else Robot::Motors::Intake.move(0);
 
 		if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
 			Robot::Pneumatics::intakeLifter.toggle();
@@ -116,7 +118,7 @@ void opcontrol() {
 		if (
 			Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) &&
 			Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP) &&
-			!pros::competition::is_connected()
+			!pros::competition::is_connected() && false
 		){
 			autonomous();
 		}
@@ -136,7 +138,7 @@ void opcontrol() {
 			Robot::Actions::LB::runMacro(LB_Macro (LOAD));
 		}
 
-		if (!Robot::Sensors::LB_Bumper.get_value() && !Robot::Actions::LB::isRunningMacro) {
+		if ((!Robot::Sensors::LB_Bumper.get_value() && !Robot::Actions::LB::isRunningMacro) || Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
 			Robot::Motors::LB_Motor.tare_position();
 		}
 	}

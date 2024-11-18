@@ -22,7 +22,7 @@ void Robot::Actions::setMogoFor(bool extended, float time, bool async) {
     Pneumatics::mogoMech.toggle();
 }
 void Robot::Actions::setIntake(int direction) {
-    Motors::Intake.move_velocity(600 * direction);
+    Motors::Intake.move_voltage(12000 * direction);
 }
 void Robot::Actions::runIntakeFor(int direction, float time, bool async) {
     if (async) {
@@ -93,7 +93,7 @@ void Robot::Actions::LB::runMacro(LB_Macro macro) {
             if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
                 break;
             }
-            LB->move_velocity(-175);
+            LB->move_velocity(-200);
             delay(20);
         }
         LB->move_velocity(0);
@@ -102,15 +102,16 @@ void Robot::Actions::LB::runMacro(LB_Macro macro) {
         return;
     }
     float error = desired - (LB->get_position() * ratio);
-    while (error > 3 && millis()-t < macro.timeout){
+    while (error > 1 && millis()-t < macro.timeout){
 
         delay(15);
         error = desired - (LB->get_position() * ratio);
         float cmd = pid->update(error);
-            cmd = std::clamp<float>(cmd, -33, 33);
+        cmd = std::clamp<float>(cmd, -20, 20);
         LB->move_velocity(cmd/ratio);
     }
     LB->move_velocity(0);
     LB->brake();
+    LB->tare_position();
     isRunningMacro = false;
 }

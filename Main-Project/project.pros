@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Main-Project",
+    "project_name": "COMP",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -323,9 +323,9 @@
       }
     },
     "upload_options": {
-      "slot": 2,
-      "after": "run",
-      "icon": "robot"
+      "slot": 1,
+      "after": "screen",
+      "icon": "power"
     },
     "use_early_access": false
   }

@@ -44,13 +44,10 @@ rd::Selector Robot::Auton::Tuning::Tuningselector (
 );
 rd::Selector Robot::Auton::autonSelectorMain (
     {
-        {"SKILLS", Autons::Skills::skillsRun},
-        {"Support", Autons::support},
-        {"Support w/ Ladder", Autons::supportTouchLadder},
-        {"Support Blue", Autons::supportBlue},
-        {"Support B w/ Ladder", Autons::supportTouchLadderBlue},
-        {"Rush", Autons::rush},
-        {"Rush B", Autons::rushBlue}
+        {"GREEDY RED", Autons::greedyRed},
+        {"GREEDY BLUE", Autons::greedyBlue},
+        {"ELIM RED", Autons::elimRed},
+        {"ELIM BLUE", Autons::elimBlue},
     }
 );
 Motor Robot::Motors::Intake (-1, v5::MotorGears::blue, v5::MotorUnits::rotations);
@@ -63,7 +60,7 @@ bool Robot::Actions::LB::isRunningMacro = false;
 
 const float Robot::maxLB = 120;
 
-lemlib::PID Robot::Auton::LB_PID(5, 1, 7);
+lemlib::PID Robot::Auton::LB_PID(5, 1, 9);
 
 //* Left motors on ports 10, 9, 8; Rights on 1, 2, 3; Using blue cartridges
 MotorGroup Robot::Motors::leftMotors (
@@ -103,7 +100,7 @@ lemlib::Chassis Robot::chassis (
     Motors::drivetrain,
     Auton::Tuning::latController,
     Auton::Tuning::angularController,
-    Sensors::sensors,
-    &Auton::Tuning::driveCurveLateral,
-    &Auton::Tuning::driveCurveAngular
+    Sensors::sensors
+    //&Auton::Tuning::driveCurveLateral,
+    //&Auton::Tuning::driveCurveAngular
 );

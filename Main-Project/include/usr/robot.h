@@ -30,7 +30,7 @@ namespace Types {
             int timeout;
             float maxSpeed;
             float minSpeed;
-            LB_Macro(LBStates toState, bool async_=true, float maxSpeed_ =200, float minSpeed_=0, int timeout_=10000){
+            LB_Macro(LBStates toState, bool async_=true, float maxSpeed_ =200, float minSpeed_=0, int timeout_=1200){
                 state = toState;
                 async = async_;
                 timeout = timeout_;
