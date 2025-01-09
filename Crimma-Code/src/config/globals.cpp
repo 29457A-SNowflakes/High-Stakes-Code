@@ -58,7 +58,7 @@ Drivetrain Robot::Motors::dt (
 
 Motor Robot::Motors::intakeMotor (14, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
 
-Motor Robot::Motors::LBMotor (-9, v5::MotorGears::green, v5::MotorEncoderUnits::degrees);
+Motor Robot::Motors::LBMotor (-9, v5::MotorGears::red, v5::MotorEncoderUnits::degrees);
 
 ControllerSettings Robot::latSettings (
     10,
