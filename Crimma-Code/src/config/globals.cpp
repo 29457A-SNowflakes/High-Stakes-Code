@@ -72,14 +72,14 @@ ControllerSettings Robot::latSettings (
     20
 );
 ControllerSettings Robot::angSettings (
-    2,
+    4,
     0,
-    23,
+    20,
     3,
     1,
-    100,
+    180,
     3,
-    500,
+    700,
     5
 );
 Chassis Robot::chassis (

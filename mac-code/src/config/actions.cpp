@@ -1,0 +1,24 @@
+#include "usr/robot.h"
+
+
+void Robot::Actions::setIntake(int dir) {
+    Robot::Motors::intakeMotor.move_voltage(dir * 120000);
+}
+void Robot::Actions::setIntakeFor(int dir, int time, bool async) {
+    if (async) {
+        pros::Task([=] {setIntakeFor(dir, time);});
+        delay(10);
+    }
+    setIntake(dir);
+    delay(time);
+    setIntake(0);
+}
+void Robot::Actions::setMogoFor(bool extended, int time, bool async) {
+    if (async) {
+        pros::Task([=] {setMogoFor(extended, time);});
+        delay(10);
+    }
+    Robot::Pneumatics::Mogo.set_value(extended);
+    delay(time);
+    Robot::Pneumatics::Mogo.set_value(!extended);
+}
