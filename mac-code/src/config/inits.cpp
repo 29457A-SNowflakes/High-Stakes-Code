@@ -8,11 +8,9 @@ using namespace std;
 using namespace utils;
 void Robot::Inits::initAll() {
     chassis.calibrate();
-    Robot::Sensors::LBRotation.reset_position();
     //initPIDs();
     delay(1000);
-    //pros::Task LBTask ([=] {LadyBrown::LBLoop();});
-    delay(10);
+    Robot::Sensors::LBRotation.reset_position();
 }
 /*
 void Robot::Inits::initPIDs() {

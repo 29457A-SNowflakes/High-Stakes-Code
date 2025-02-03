@@ -4,35 +4,35 @@
 
 using namespace lemlib;
 using namespace pros;
-using namespace Autons::Testers;
-Chassis* chassis (&Robot::chassis);
+using namespace Autons;
 
-void TurnTest() {
-    chassis->calibrate();
+void Testers::TurnTest() {
+    Robot::chassis.calibrate();
+    Robot::chassis.setPose(0, 0, 0);
     delay(1000);
-    chassis->turnToHeading(90, 1000);
-    chassis->turnToHeading(0, 1000);
-    chassis->waitUntilDone();
+    Robot::chassis.turnToHeading(90, 1000);
+    Robot::chassis.turnToHeading(0, 1000);
+    Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }
-void Turn180() {
-    chassis->calibrate();
+void Testers::Turn180() {
+    Robot::chassis.calibrate();
     delay(1000);
-    chassis->turnToHeading(180, 1000);
-    chassis->waitUntilDone();
+    Robot::chassis.turnToHeading(180, 1000);
+    Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }
-void Move72() {
-    chassis->calibrate();
+void Testers::Move72() {
+    Robot::chassis.calibrate();
     delay(1000);
-    chassis->moveToPoint(0, 72, 1000);
-    chassis->waitUntilDone();
+    Robot::chassis.moveToPoint(0, 72, 1000);
+    Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }
-void Move24() {
-    chassis->calibrate();
+void Testers::Move24() {
+    Robot::chassis.calibrate();
     delay(1000);
-    chassis->moveToPoint(0, 24, 1000);
-    chassis->waitUntilDone();
+    Robot::chassis.moveToPoint(0, 24, 1000);
+    Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }

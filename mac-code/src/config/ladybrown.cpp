@@ -99,7 +99,7 @@ void LadyBrown::LBLoop() {
 }
 */
 
-void LadyBrown::moveToPoint(float point) {
+void LadyBrown::moveToPoint(float point, bool toRest) {
     hasFinished = false;
     float targ = point;
     float pos = rotSens->get_position() * 0.25;
@@ -107,6 +107,18 @@ void LadyBrown::moveToPoint(float point) {
 
     float startTime = pros::millis();
     float elapsed = pros::millis()-startTime;
+    if (toRest && false) {
+        elapsed = pros::millis()-startTime;
+        Robot::master.rumble("-");
+        while (limit->get_value()  && !cancel && !manualControl && elapsed < timeout) {
+            delay(20);
+            motor->move(-127);
+        }
+        motor->move(0);
+        rotSens->reset_position();
+        hasFinished = true;
+        return;
+    }
     while (std::abs(error) > exitError && !manualControl && !cancel && elapsed < timeout) {
         elapsed = pros::millis()-startTime;
         pos = rotSens->get_position() * 0.75;
@@ -122,22 +134,27 @@ void LadyBrown::moveToPoint(float point) {
 void LadyBrown::manualMove(int dir) {
     if (dir == 0) {
         manualControl = false;
-        if (hasFinished) motor->move(0);
+        if (hasFinished) {
+            motor->move(0);
+            if (limit->get_value()) {
+                currentState = "REST";
+                rotSens->reset_position();
+            }
+        }
         return;
     }
     else if (!manualControl) {
         manualControl = true;
         while (!hasFinished) pros::delay(15);
+        Robot::Actions::FlingRing(true);
     }
     
     motor->move(127 * dir);
 }
 void LadyBrown::waitForFinish() {
-    cancel = true;
     while (!hasFinished) {
         pros::delay(15);
     }
-    cancel = false;
 }
 void LadyBrown::moveTo(const std::string action, bool async) {
     // Check if the action exists in the states map
@@ -152,16 +169,18 @@ void LadyBrown::moveTo(const std::string action, bool async) {
     float point = states[action];
     std::cout << "Current State: " << currentState << ", Point: " << point << "\n";
 
+    cancel = true;
     waitForFinish();
+    cancel = false;
 
     // Handle async or synchronous operation
     if (async) {
         Task t ([=] {
-            moveToPoint(point);
+            moveToPoint(point, currentState == "REST");
             pros::delay(10);
         });
     } else {
-        moveToPoint(point);
+        moveToPoint(point, currentState == "REST");
     }
 }
 void LadyBrown::cycle() {

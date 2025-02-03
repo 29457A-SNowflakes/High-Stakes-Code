@@ -5,9 +5,11 @@
 #include "usr/robot.h"
 
 
-
+bool init;
 
 void initialize() {
+    bool hasChangedColour = false;
+    init = true;
     Robot::Screen::printConsole.println(" -- Initialize --");
     Robot::Screen::printConsole.println("Initializing...");
 
@@ -16,9 +18,35 @@ void initialize() {
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Initialize --");
     Robot::Motors::LBMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+    pros::Task t ([=] {
+        while (init) {
+            if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+                break;
+            }
+            delay(2000);
+            Robot::master.rumble(".");
+        }
+    });
+    t.suspend();
+
+    while (init && false) {
+        delay(20);
+        if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+            hasChangedColour = true;
+            if (Robot::playingColour == "BLUE") Robot::playingColour = "RED";
+            else Robot::playingColour = "BLUE";
+            Robot::master.print(1, 1, "COLOUR: %s", Robot::playingColour);
+        }
+    }
+    
 }
 
 void autonomous() {
+
+    Robot::Screen::printConsole.focus();
+    //Robot::Inits::colourSort(Robot::playingColour);
+    init = false;
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
@@ -31,10 +59,14 @@ void autonomous() {
 }
 
 void opcontrol() {
+    Robot::Screen::printConsole.focus();
+    //Robot::Inits::colourSort(Robot::playingColour);
+    init = false;
     pros::Controller* master = &Robot::master;
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println("-- Driver Control --");
     
+    Robot::Pneumatics::Mogo.retract();
     
     bool waitingForLBReset = false;
     while (true) {
@@ -51,11 +83,21 @@ void opcontrol() {
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
             Robot::Pneumatics::doinker.toggle();
         }
-        if (master->get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+        if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+
+            Robot::Pneumatics::intakeLift.toggle();
+
+        }
+        if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
+
+            autonomous();
+             
+        }
+        if (master->get_digital(pros::E_CONTROLLER_DIGITAL_R2) && !Robot::Motors::intakeAutoControl){
 
             Robot::Actions::setIntake(1);
 
-        } else if (master->get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+        } else if (master->get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !Robot::Motors::intakeAutoControl) {
 
             Robot::Actions::setIntake(-1);
 
@@ -63,7 +105,7 @@ void opcontrol() {
 
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 
-            LadyBrown::cycle();
+            LadyBrown::moveTo("LOAD");
 
         }
         if (master->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
@@ -73,13 +115,13 @@ void opcontrol() {
             waitingForLBReset = true;
         } else if (master->get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
             LadyBrown::manualMove(-1);
-            waitingForLBReset = true;
+            waitingForLBReset = false;
         } else {
             LadyBrown::manualMove(0);
             if (waitingForLBReset) {
                 waitingForLBReset = false;
                 pros::Task t ([=] {
-                    delay(350);
+                    delay(150);
                     Robot::Sensors::LBRotation.set_position(0);
                 });
             }

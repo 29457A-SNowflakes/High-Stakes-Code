@@ -16,4 +16,7 @@ namespace Autons {
         void Solo_AWP_Blue();
         void Solo_AWP_Red();
     }
+    namespace Skills {
+        void Skills();
+    }
 }
