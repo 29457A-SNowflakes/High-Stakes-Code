@@ -1,18 +1,23 @@
 #include "usr/robot.h"
 
 
-void Robot::Actions::setIntake(int dir) {
-    Robot::Motors::intakeMotor.move_voltage(dir * 120000);
+void Robot::Actions::setIntake(int dir, Intake_Action type) {
+    if (type == Intake_Action::FIRST || type == Intake_Action::BOTH) {
+        Robot::Motors::preRollerMotor.move_voltage(12000 * dir);
+    }
+    if (type == Intake_Action::SECOND || type == Intake_Action::BOTH) {
+        Robot::Motors::hooksMotor.move_voltage(12000 * dir);
+    }
 }
 
-void Robot::Actions::setIntakeFor(int dir, int time, bool async) {
+void Robot::Actions::setIntakeFor(int dir, Intake_Action type, int time, bool async) {
     if (async) {
-        pros::Task([=] {setIntakeFor(dir, time);});
+        pros::Task([=] {setIntakeFor(dir, type, time);});
         delay(10);
     }
-    setIntake(dir);
+    setIntake(dir, type);
     delay(time);
-    setIntake(0);
+    setIntake(0, type);
 }
 void Robot::Actions::setMogoFor(bool extended, int time, bool async) {
     if (async) {
@@ -33,6 +38,6 @@ void Robot::Actions::FlingRing(bool async, float for_) {
         delay(10); return;
     }
     Motors::intakeAutoControl = true;
-    Robot::Actions::setIntakeFor(-1, for_, false);
+    Robot::Actions::setIntakeFor(-1, Intake_Action::SECOND, for_, false);
     Motors::intakeAutoControl = false;
 }

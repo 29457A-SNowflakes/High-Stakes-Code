@@ -48,7 +48,11 @@ class LadyBrown {
 
 
 };
-
+enum Intake_Action {
+    FIRST,
+    SECOND,
+    BOTH
+};
 class Robot {
     public: 
         static Controller master;
@@ -68,8 +72,8 @@ class Robot {
 
         class Actions {
             public:
-                static void setIntake (int dir);
-                static void setIntakeFor (int dir, int time, bool async=true);
+                static void setIntake (int dir, Intake_Action type);
+                static void setIntakeFor (int dir, Intake_Action type, int time, bool async=true);
 
                 static void FlingRing(bool async, float for_=100);
 
@@ -95,7 +99,8 @@ class Robot {
         class Motors {
             public:
                 static Drivetrain dt;
-                static Motor intakeMotor;
+                static Motor hooksMotor;
+                static Motor preRollerMotor;
                 static Motor LBMotor;
                 static bool intakeAutoControl;
         };

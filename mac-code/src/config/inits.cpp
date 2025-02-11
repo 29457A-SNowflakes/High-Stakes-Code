@@ -13,15 +13,7 @@ void Robot::Inits::initAll() {
     delay(2000);
     Robot::Sensors::LBRotation.reset_position();
 
-    pros::Task t ([=] {
-        while (true) {
-            break;
-            delay(100);
-            if (Robot::Motors::intakeMotor.get_actual_velocity() <= 5 && Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-                Robot::Actions::FlingRing(true, 1000);
-            }
-        }
-    });
+    //! Deprecated
     pros::Task limitWatcher ([=]{
         return;
         while (true) {

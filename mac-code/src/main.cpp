@@ -104,13 +104,13 @@ void opcontrol() {
         }
         if (master->get_digital(pros::E_CONTROLLER_DIGITAL_R2) && !Robot::Motors::intakeAutoControl){
 
-            Robot::Actions::setIntake(1);
+            Robot::Actions::setIntake(1, Intake_Action::BOTH);
 
         } else if (master->get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !Robot::Motors::intakeAutoControl) {
 
-            Robot::Actions::setIntake(-1);
+            Robot::Actions::setIntake(-1, Intake_Action::BOTH);
 
-        } else Robot::Actions::setIntake(0);
+        } else Robot::Actions::setIntake(0, Intake_Action::BOTH);
 
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 

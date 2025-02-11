@@ -43,12 +43,12 @@ void Autons::Match::Solo_AWP_Blue() {
     chassis->moveToPoint(22, 22, 2000, {.forwards=false, .maxSpeed=60}, false);
     
     // pick up mogo when arrived
-    Robot::Actions::setIntake(-1);
+    Robot::Actions::setIntake(-1, Intake_Action::SECOND);
     Robot::Pneumatics::Mogo.extend();
     delay(1250);
     chassis->turnToPoint(18, 42, 1000);
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPoint(18, 40, 1500, {.maxSpeed=60});
     chassis->turnToHeading(270, 750);
     chassis->moveToPose(9, 43, 270, 3000, {.maxSpeed=50});
@@ -64,7 +64,7 @@ void Autons::Match::Solo_AWP_Blue() {
 
     chassis->moveToPose(18, 13, 320, 2000, {.forwards=false});
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPose(9.75, 47, 0, 3500, {.maxSpeed=65});
     chassis->waitUntil(3);
     chassis->cancelMotion();
@@ -110,12 +110,12 @@ void Autons::Match::Solo_AWP_Red() {
     chassis->moveToPoint(-24, 22, 2000, {.forwards=false, .maxSpeed=60}, false);
     
     // pick up mogo when arrived
-    Robot::Actions::setIntake(-1);
+    Robot::Actions::setIntake(-1, Intake_Action::SECOND);
     Robot::Pneumatics::Mogo.extend();
     delay(1250);
     chassis->turnToPoint(-22, 42, 1000, {.maxSpeed=80});
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPoint(-22, 40, 1500, {.maxSpeed=60});
     chassis->turnToHeading(90, 750);
     chassis->moveToPose(-9, 43, 90, 3000, {.maxSpeed=50});
@@ -130,7 +130,7 @@ void Autons::Match::Solo_AWP_Red() {
 
     chassis->moveToPose(-18, 13, 50, 2000, {.forwards=false});
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPose(-10.75, 47, 0, 3500, {.maxSpeed=65});
     chassis->waitUntil(3);
     chassis->cancelMotion();
@@ -187,15 +187,15 @@ void Autons::Skills::Skills() {
 
     // intake movement to ensure settled mogo
     delay(500);
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     delay(500);
-    Robot::Actions::setIntake(-1);
+    Robot::Actions::setIntake(-1, Intake_Action::SECOND);
 
     // move to first ring
     chassis->turnToPoint(-28, -20, 1000, {.maxSpeed=60});
     chassis->moveToPoint(-28, -20, 1500, {.maxSpeed=60});
     chassis->waitUntil(4);
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->waitUntilDone();
     delay(1000);
     // move to second ring
@@ -215,7 +215,7 @@ void Autons::Skills::Skills() {
     delay(500);
     Robot::Actions::FlingRing(false);
     LadyBrown::moveToPoint(15500);
-    Robot::Actions::setIntake(-1);
+    Robot::Actions::setIntake(-1, Intake_Action::SECOND);
     delay(250);
     chassis->moveToPoint(0, -40, 1000, {.forwards=false}, false);
     LadyBrown::moveToPoint(7000);
@@ -223,7 +223,7 @@ void Autons::Skills::Skills() {
     chassis->moveToPoint(-35, -50, 1500);
     chassis->moveToPoint(-52, -50, 2000, {.maxSpeed=70});
     chassis->waitUntil(5);
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->waitUntilDone();
     chassis->moveToPose(-72, -72, 10000, 45,{.forwards=false});
     chassis->waitUntilDone();
@@ -234,7 +234,7 @@ void Autons::Skills::Skills() {
     chassis->moveToPoint(72, -72, 10000);
     chassis->waitUntilDone();
     delay(5000);
-    Robot::Actions::setIntake(0);
+    Robot::Actions::setIntake(0, Intake_Action::BOTH);
 }
 
 
@@ -276,13 +276,13 @@ void Autons::Match::Mogo_Side_Elims_R() {
     delay(500);
 
     // ensure good clamp
-    Robot::Actions::setIntake(-1);
+    Robot::Actions::setIntake(-1, Intake_Action::SECOND);
     delay(750);
     
     // drive into ring 1
     chassis->turnToPoint(24, 48, 500);
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPoint(24, 40, 1000);
     chassis->waitUntilDone();
     delay(1000);
@@ -295,7 +295,7 @@ void Autons::Match::Mogo_Side_Elims_R() {
     Robot::Pneumatics::doinker.extend();;
     chassis->moveToPoint(72, 69, 700, {.maxSpeed=100, .minSpeed=20,});
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(0);
+    Robot::Actions::setIntake(0, Intake_Action::BOTH);
     chassis->turnToHeading(45, 250);
     chassis->waitUntilDone();
 
@@ -312,7 +312,7 @@ void Autons::Match::Mogo_Side_Elims_R() {
     
 
     // move away from stack to get 3rd ring
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPose(48, 40, 0, 1000, {.forwards=false});
     chassis->moveToPose(48, 90, 0, 1300);
     chassis->moveToPose(48, 40, 0, 800, {.forwards=false, .maxSpeed=60});
@@ -324,7 +324,7 @@ void Autons::Match::Mogo_Side_Elims_R() {
     chassis->moveToPose(72, 72, 225, 1500, {.forwards=false});
     chassis->waitUntilDone();
     Robot::Pneumatics::Mogo.retract();
-    Robot::Actions::setIntakeFor(-1, 500, false);
+    Robot::Actions::setIntakeFor(-1, Intake_Action::BOTH, 500, false);
 
     // move to 3rd mogo control
     chassis->moveToPose(28, 48, 90, 1300);
@@ -373,13 +373,13 @@ void Autons::Match::Mogo_Side_Elims_B() {
     Robot::Pneumatics::Mogo.extend();
 
     // ensure good clamp
-    Robot::Actions::setIntake(-1);
+    Robot::Actions::setIntake(-1, Intake_Action::SECOND);
     delay(750);
     
     // drive into ring 1
     chassis->turnToPoint(-24, 48, 500);
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPoint(-24, 40, 1000);
     chassis->waitUntilDone();
     delay(500);
@@ -392,7 +392,7 @@ void Autons::Match::Mogo_Side_Elims_B() {
     Robot::Pneumatics::doinker.extend();;
     chassis->moveToPoint(-72, 69, 700, {.maxSpeed=100, .minSpeed=20,});
     chassis->waitUntilDone();
-    Robot::Actions::setIntake(0);
+    Robot::Actions::setIntake(0, Intake_Action::BOTH);
     chassis->turnToHeading(315, 250);
     chassis->waitUntilDone();
 
@@ -409,7 +409,7 @@ void Autons::Match::Mogo_Side_Elims_B() {
     
 
     // move away from stack to get 3rd ring
-    Robot::Actions::setIntake(1);
+    Robot::Actions::setIntake(1, Intake_Action::BOTH);
     chassis->moveToPose(-40, 52, 90, 1000, {.forwards=false});
     chassis->moveToPose(-90, 40, 90, 1300);
     chassis->moveToPose(-40, 52, 90, 800, {.forwards=false, .maxSpeed=60});
@@ -421,7 +421,7 @@ void Autons::Match::Mogo_Side_Elims_B() {
     chassis->moveToPose(-72, 72, 135, 1500, {.forwards=false});
     chassis->waitUntilDone();
     Robot::Pneumatics::Mogo.retract();
-    Robot::Actions::setIntakeFor(-1, 500, false);
+    Robot::Actions::setIntakeFor(-1, Intake_Action::BOTH, 500, false);
 
     // move to 3rd mogo control
     chassis->moveToPose(-28, 48, 270, 1300);
