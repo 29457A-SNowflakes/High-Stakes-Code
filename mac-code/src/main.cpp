@@ -44,6 +44,7 @@ void initialize() {
 
 void autonomous() {
 
+    Robot::Pneumatics::Mogo.retract();
     Robot::Screen::printConsole.focus();
     //Robot::Inits::colourSort(Robot::playingColour);
     init = false;
@@ -66,14 +67,22 @@ void opcontrol() {
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println("-- Driver Control --");
     
-    Robot::Pneumatics::Mogo.retract();
     
     bool waitingForLBReset = false;
     while (true) {
         
         int leftX = master->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         int leftY = master->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        Robot::chassis.curvature(leftY, leftX);
+
+        if (leftY >= 20) {
+
+            Robot::chassis.arcade(leftY, leftX);
+
+        } else {
+
+            Robot::chassis.curvature(leftY, leftX);
+            
+        }
 
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
 

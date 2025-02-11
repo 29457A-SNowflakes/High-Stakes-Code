@@ -24,6 +24,8 @@ Controller Robot::master (E_CONTROLLER_MASTER);
 rd::Selector Robot::Screen::autonSelector ({
     {"solo awp red", Autons::Match::Solo_AWP_Red},
     {"solo awp BLUE", Autons::Match::Solo_AWP_Blue},
+    {"mogo side elim RED",  Autons::Match::Mogo_Side_Elims_R},
+    {"mogo side RED", Autons::Match::Mogo_Side_Elims_B},
     {"SKILLS", Autons::Skills::Skills}
 });
 rd::Console Robot::Screen::printConsole ("Printing");
@@ -63,7 +65,7 @@ Drivetrain Robot::Motors::dt (
     &leftDrive,
     &rightDrive,
     11, // measure
-    2.75,
+    2.75,  
     450,
     8
 );
@@ -84,9 +86,9 @@ ControllerSettings Robot::latSettings (
     20
 );
 ControllerSettings Robot::angSettings (
-    6,
+    5,
     0,
-    27,
+    28,
     3,
     1,
     180,
@@ -104,7 +106,7 @@ Chassis Robot::chassis (
 
 Motor* LadyBrown::motor = &Robot::Motors::LBMotor;
 
-Rotation Robot::Sensors::LBRotation (12);
+Rotation Robot::Sensors::LBRotation (10);
 adi::DigitalIn Robot::Sensors::LBLimiter ('E');
 adi::DigitalIn* LadyBrown::limit = &Robot::Sensors::LBLimiter;
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;

@@ -15,6 +15,9 @@ namespace Autons {
 
         void Solo_AWP_Blue();
         void Solo_AWP_Red();
+
+        void Mogo_Side_Elims_R();
+        void Mogo_Side_Elims_B();
     }
     namespace Skills {
         void Skills();

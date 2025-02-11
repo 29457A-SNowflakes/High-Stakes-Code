@@ -1,4 +1,5 @@
 #include "lemlib/chassis/chassis.hpp"
+#include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "usr/utils.h"
 
@@ -9,8 +10,30 @@ using namespace utils;
 void Robot::Inits::initAll() {
     chassis.calibrate();
     //initPIDs();
-    delay(1000);
+    delay(2000);
     Robot::Sensors::LBRotation.reset_position();
+
+    pros::Task t ([=] {
+        while (true) {
+            break;
+            delay(100);
+            if (Robot::Motors::intakeMotor.get_actual_velocity() <= 5 && Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+                Robot::Actions::FlingRing(true, 1000);
+            }
+        }
+    });
+    pros::Task limitWatcher ([=]{
+        return;
+        while (true) {
+            delay(30);
+            if (Robot::Sensors::LBLimiter.get_new_press()) {
+                while (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+                    delay(20);
+                }
+                LadyBrown::rotSens->set_position(-200);
+            }
+        }
+    });
 }
 /*
 void Robot::Inits::initPIDs() {

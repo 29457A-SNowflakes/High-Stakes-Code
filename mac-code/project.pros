@@ -342,7 +342,8 @@
     "upload_options": {
       "after": "run",
       "icon": "pizza",
-      "slot": 2
+      "slot": 2,
+      "description": "proj for nuast"
     },
     "use_early_access": false
   }
