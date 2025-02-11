@@ -30,7 +30,7 @@ rd::Selector Robot::Screen::autonSelector ({
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
-Rotation trackingRotSens (13);
+Rotation trackingRotSens (13); // redo
 
 TrackingWheel horiTrackingWheel (
 	&trackingRotSens,
@@ -38,9 +38,9 @@ TrackingWheel horiTrackingWheel (
 	2.5
 );
 
-adi::Encoder trackingEncoder ('G', 'H', true);
+Rotation vertTrackingSensor (11); // redo
 TrackingWheel vertTrackingWheel (
-    &trackingEncoder,
+    &vertTrackingSensor,
     Omniwheel::NEW_275,
     1 // ??
 );
