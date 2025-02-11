@@ -19,18 +19,8 @@ void initialize() {
     Robot::Screen::printConsole.println(" -- Initialize --");
     Robot::Motors::LBMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-    pros::Task t ([=] {
-        while (init) {
-            if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-                break;
-            }
-            delay(2000);
-            Robot::master.rumble(".");
-        }
-    });
-    t.suspend();
 
-    while (init && false) {
+    while (init) {
         delay(20);
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hasChangedColour = true;
@@ -43,7 +33,6 @@ void initialize() {
 }
 
 void autonomous() {
-
     Robot::Pneumatics::Mogo.retract();
     Robot::Screen::printConsole.focus();
     //Robot::Inits::colourSort(Robot::playingColour);

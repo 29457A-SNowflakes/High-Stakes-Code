@@ -11,25 +11,26 @@ bool isColour(float colour, float seeing, float maxError=10) {
 }
 int timeTillFling = 100;
 int cooldown = 500;
-void Robot::Inits::colourSort(string colour) {
+void Robot::Inits::colourSort() {
     if (isSorting) return;
     isSorting = true;
     Optical* sens = &Robot::Sensors::colourSens;
     sens->set_led_pwm(100);
 
-    float colourToSort;
-    if (playingColour == "BLUE") colourToSort = 0;
-    else if (playingColour == "RED") colourToSort = 200;
 
     pros::Task task ([=] {
+        float colourToSort;
         int cooldownStart;
         while (true) {
+            if (Robot::playingColour == "BLUE") colourToSort = 0;
+            else if (Robot::playingColour == "RED") colourToSort = 200;
+
             delay(20);
             float seeing = sens->get_hue();
             bool shouldFling = isColour(colourToSort, seeing);
-            if (shouldFling && millis()-cooldownStart >= cooldownStart) {
+            if (shouldFling && sens->get_proximity() <= 70) {
                 delay(timeTillFling);
-                Actions::FlingRing(false);
+                Actions::FlingRing(false, 300);
                 shouldFling = false;
                 cooldownStart = millis();
             }

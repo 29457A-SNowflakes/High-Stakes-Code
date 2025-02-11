@@ -13,6 +13,8 @@ void Robot::Inits::initAll() {
     delay(2000);
     Robot::Sensors::LBRotation.reset_position();
 
+    Robot::Inits::colourSort();
+
     //! Deprecated
     pros::Task limitWatcher ([=]{
         return;

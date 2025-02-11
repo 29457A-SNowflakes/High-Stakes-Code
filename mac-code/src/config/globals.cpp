@@ -58,8 +58,8 @@ adi::Pneumatics Robot::Pneumatics::Mogo ('a', true, false); // redo
 adi::Pneumatics Robot::Pneumatics::doinker ('b', false, false); // redo
 adi::Pneumatics Robot::Pneumatics::intakeLift ('c', false, true); // redo
 
-MotorGroup leftDrive ({-19, -18, -17}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
-MotorGroup rightDrive ({20, 16, 15}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
+MotorGroup leftDrive ({-16, 17, -4}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
+MotorGroup rightDrive ({-19, 18, 5}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
 
 Drivetrain Robot::Motors::dt (
     &leftDrive,
@@ -71,9 +71,9 @@ Drivetrain Robot::Motors::dt (
 );
 
 Motor Robot::Motors::hooksMotor (20, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
-Motor Robot::Motors::preRollerMotor (1, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // redo
+Motor Robot::Motors::preRollerMotor (6, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // redo
 
-Motor Robot::Motors::LBMotor (9, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
+Motor Robot::Motors::LBMotor (11, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
 
 //! RETUNE
 ControllerSettings Robot::latSettings (
@@ -118,6 +118,7 @@ const float LadyBrown::minPos = -100;
 const float LadyBrown::maxPos = 900;
 const float LadyBrown::exitError = 140;
 const float LadyBrown::timeout = 1100;
+const float LadyBrown::gearRatio = 12.0 / 36.0; // direct ?
 
 string LadyBrown::currentState = "REST";
 std::map<string, float> LadyBrown::states = {

@@ -32,6 +32,8 @@ class LadyBrown {
 
         static const float timeout;
 
+        static const float gearRatio;
+
         static Rotation* rotSens;
         static adi::DigitalIn* limit;
         static Motor* motor;
@@ -108,7 +110,7 @@ class Robot {
         class Inits {
             public: 
                 static void initAll();
-                static void colourSort(string colour);
+                static void colourSort();
             protected:
                 static void initPIDs();
                 static bool isSorting;
