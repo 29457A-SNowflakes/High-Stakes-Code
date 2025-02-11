@@ -44,7 +44,7 @@ TrackingWheel vertTrackingWheel (
     Omniwheel::NEW_275,
     1 // ??
 );
-Imu Robot::Sensors::imu (5);
+Imu Robot::Sensors::imu (5); // redo
 
 OdomSensors Robot::Sensors::sensors (
     &vertTrackingWheel,
@@ -54,12 +54,12 @@ OdomSensors Robot::Sensors::sensors (
     &imu
 );
 
-adi::Pneumatics Robot::Pneumatics::Mogo ('a', true, false);
-adi::Pneumatics Robot::Pneumatics::doinker ('b', false, false);
-adi::Pneumatics Robot::Pneumatics::intakeLift ('c', false, true);
+adi::Pneumatics Robot::Pneumatics::Mogo ('a', true, false); // redo
+adi::Pneumatics Robot::Pneumatics::doinker ('b', false, false); // redo
+adi::Pneumatics Robot::Pneumatics::intakeLift ('c', false, true); // redo
 
-MotorGroup leftDrive ({-19, -18, -17}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
-MotorGroup rightDrive ({20, 16, 15}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
+MotorGroup leftDrive ({-19, -18, -17}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
+MotorGroup rightDrive ({20, 16, 15}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
 
 Drivetrain Robot::Motors::dt (
     &leftDrive,
@@ -71,10 +71,11 @@ Drivetrain Robot::Motors::dt (
 );
 
 Motor Robot::Motors::hooksMotor (20, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
-Motor Robot::Motors::preRollerMotor (1, v5::MotorGears::green, v5::MotorEncoderUnits::deg);
+Motor Robot::Motors::preRollerMotor (1, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // redo
 
-Motor Robot::Motors::LBMotor (9, v5::MotorGears::green, v5::MotorEncoderUnits::degrees);
+Motor Robot::Motors::LBMotor (9, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
 
+//! RETUNE
 ControllerSettings Robot::latSettings (
     14,
     0,
@@ -107,8 +108,8 @@ Chassis Robot::chassis (
 
 Motor* LadyBrown::motor = &Robot::Motors::LBMotor;
 
-Rotation Robot::Sensors::LBRotation (10);
-adi::DigitalIn Robot::Sensors::LBLimiter ('E');
+Rotation Robot::Sensors::LBRotation (10); // redo
+adi::DigitalIn Robot::Sensors::LBLimiter ('E'); // redo
 adi::DigitalIn* LadyBrown::limit = &Robot::Sensors::LBLimiter;
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
@@ -130,7 +131,7 @@ bool LadyBrown::hasFinished = true;
 bool LadyBrown::manualControl = false;
 int LadyBrown::currentStateNum = 0;
 
-Optical Robot::Sensors::colourSens (3);
+Optical Robot::Sensors::colourSens (3); // redo / find sens
 string Robot::playingColour = "BLUE";
 bool Robot::Inits::isSorting = false;
 
