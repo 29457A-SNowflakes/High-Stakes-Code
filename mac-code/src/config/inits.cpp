@@ -2,32 +2,20 @@
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "usr/utils.h"
-
+#include "pros/apix.h"
 using namespace pros;
 using namespace lemlib;
-using namespace std;
+using namespace std;    
 using namespace utils;
 void Robot::Inits::initAll() {
+    pros::c::serctl(SERCTL_DISABLE_COBS, nullptr);
+    Robot::Sensors::LBRotation.reset_position();
     chassis.calibrate();
     //initPIDs();
-    delay(2000);
-    Robot::Sensors::LBRotation.reset_position();
+    delay(000);
 
     Robot::Inits::colourSort();
 
-    //! Deprecated
-    pros::Task limitWatcher ([=]{
-        return;
-        while (true) {
-            delay(30);
-            if (Robot::Sensors::LBLimiter.get_new_press()) {
-                while (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-                    delay(20);
-                }
-                LadyBrown::rotSens->set_position(-200);
-            }
-        }
-    });
 }
 /*
 void Robot::Inits::initPIDs() {

@@ -1,51 +1,51 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "NUAST!",
+    "project_name": "nats!",
     "target": "v5",
     "templates": {
       "LemLib": {
-        "location": "/Users/danieldew/Library/Application Support/PROS/templates/LemLib@0.5.5",
+        "location": "/Users/danieldew/Library/Application Support/PROS/templates/LemLib@0.5.4",
         "metadata": {
-          "origin": "LemLib"
+          "origin": "local"
         },
         "name": "LemLib",
         "py/object": "pros.conductor.templates.local_template.LocalTemplate",
         "supported_kernels": "^4.1.1",
         "system_files": [
-          "include\\lemlib\\pid.hpp",
-          "include\\lemlib\\pose.hpp",
-          "include\\lemlib\\api.hpp",
-          "include\\lemlib\\logger\\baseSink.hpp",
-          "include\\lemlib\\logger\\stdout.hpp",
-          "include\\lemlib\\chassis\\odom.hpp",
-          "include\\lemlib\\exitcondition.hpp",
-          "include\\fmt\\core.h",
-          "include\\fmt\\args.h",
-          "firmware\\hot-cold-asset.mk",
-          "include\\lemlib\\logger\\buffer.hpp",
-          "include\\lemlib\\logger\\infoSink.hpp",
-          "include\\fmt\\LICENSE",
-          "firmware\\LemLib.a",
-          "include\\lemlib\\README.md",
-          "include\\lemlib\\asset.hpp",
-          "include\\lemlib\\util.hpp",
-          "include\\lemlib\\driveCurve.hpp",
-          "include\\lemlib\\logger\\message.hpp",
-          "include\\lemlib\\chassis\\trackingWheel.hpp",
-          "include\\fmt\\format.h",
-          "static\\example.txt",
-          "include\\lemlib\\LICENSE",
-          "include\\lemlib\\VERSION",
-          "include\\lemlib\\chassis\\chassis.hpp",
-          "include\\lemlib\\logger\\telemetrySink.hpp",
-          "include\\fmt\\format-inl.h",
-          "include\\lemlib\\logger\\logger.hpp",
-          "include\\lemlib\\timer.hpp"
+          "include/fmt/args.h",
+          "include/lemlib/api.hpp",
+          "include/lemlib/logger/logger.hpp",
+          "include/fmt/LICENSE",
+          "include/fmt/format.h",
+          "include/lemlib/chassis/odom.hpp",
+          "include/lemlib/logger/buffer.hpp",
+          "include/lemlib/driveCurve.hpp",
+          "include/lemlib/logger/telemetrySink.hpp",
+          "include/lemlib/logger/baseSink.hpp",
+          "include/lemlib/pose.hpp",
+          "include/lemlib/chassis/chassis.hpp",
+          "include/lemlib/chassis/trackingWheel.hpp",
+          "include/lemlib/README.md",
+          "include/fmt/core.h",
+          "include/lemlib/asset.hpp",
+          "include/lemlib/pid.hpp",
+          "include/lemlib/util.hpp",
+          "static/example.txt",
+          "include/lemlib/VERSION",
+          "firmware/hot-cold-asset.mk",
+          "include/lemlib/LICENSE",
+          "include/lemlib/timer.hpp",
+          "include/fmt/format-inl.h",
+          "include/lemlib/logger/stdout.hpp",
+          "include/lemlib/logger/infoSink.hpp",
+          "include/lemlib/logger/message.hpp",
+          "include/lemlib/exitcondition.hpp",
+          "firmware/LemLib.a"
         ],
         "target": "v5",
         "user_files": [],
-        "version": "0.5.5"
+        "version": "0.5.4"
       },
       "LemLibTarball": {
         "location": "/Users/danieldew/Library/Application Support/PROS/templates/LemLibTarball@0.5.0-rc.1",
@@ -341,9 +341,9 @@
     },
     "upload_options": {
       "after": "run",
+      "description": "proj for nuast",
       "icon": "pizza",
-      "slot": 2,
-      "description": "proj for nuast"
+      "slot": 1
     },
     "use_early_access": false
   }

@@ -4,6 +4,7 @@ namespace Autons {
         void Turn180();
         void Move72();
         void Move24();
+        void SqaureTest();
     }
 
     namespace Match {

@@ -323,6 +323,7 @@ struct MoveToPointParams {
         float earlyExitRange = 0;
 };
 
+
 // default drive curve
 extern ExpoDriveCurve defaultDriveCurve;
 
@@ -709,11 +710,12 @@ class Chassis {
          */
         void follow(const asset& path, float lookahead, int timeout, bool forwards = true, bool async = true);
         /**
-         * @brief Control the robot during the driver using the tank drive control scheme. In this control scheme one
-         * joystick axis controls the left motors' forward and backwards movement of the robot, while the other joystick
-         * axis controls right motors' forward and backward movement.
-         * @param left speed to move left wheels forward or backward. Takes an input from -127 to 127.
-         * @param right speed to move right wheels forward or backward. Takes an input from -127 to 127.
+         * @brief Control the robot during the driver using the arcade drive control scheme. In this control scheme one
+         * joystick axis controls the forwards and backwards movement of the robot, while the other joystick axis
+
+         * controls  the robot's turning
+         * @param throttle speed to move forward or backward. Takes an input from -127 to 127.
+         * @param turn speed to turn. Takes an input from -127 to 127.
          * @param disableDriveCurve whether to disable the drive curve or not. If disabled, uses a linear curve with no
          * deadzone or minimum power
          *
@@ -909,6 +911,13 @@ class Chassis {
          * @warning Do not interact with these unless you know what you are doing
          */
         PID angularPID;
+
+        void changeLatP (float P);
+        void changeLatI (float I);
+        void changeLatD (float D);
+        void changeAngularP (float P);
+        void changeAngularI (float I);
+        void changeAngularD (float D);
     protected:
         /**
          * @brief Indicates that this motion is queued and blocks current task until this motion reaches front of queue

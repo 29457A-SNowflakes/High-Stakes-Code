@@ -102,7 +102,7 @@ void LadyBrown::LBLoop() {
 void LadyBrown::moveToPoint(float point, bool toRest) {
     hasFinished = false;
     float targ = point;
-    float pos = rotSens->get_position() * 0.25;
+    float pos = rotSens->get_position() * gearRatio;
     float error = targ - pos;
 
     float startTime = pros::millis();
@@ -121,7 +121,7 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
     }
     while (std::abs(error) > exitError && !manualControl && !cancel && elapsed < timeout) {
         elapsed = pros::millis()-startTime;
-        pos = rotSens->get_position() * 0.75;
+        pos = rotSens->get_position() * gearRatio;
         error = targ-pos;
         float cmd = P_Gain * error;
         cmd = std::clamp<float>(cmd, -12000, 12000);

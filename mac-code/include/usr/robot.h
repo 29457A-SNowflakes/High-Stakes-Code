@@ -4,6 +4,7 @@
 #include "pros/motors.hpp"
 #include "pros/rotation.hpp"
 #include "robodash/api.h"
+#include "robodash/views/console.hpp"
 #include "robodash/views/selector.hpp"
 #include <map>
 #include <queue>
@@ -70,6 +71,8 @@ class Robot {
             public:
                 static rd::Selector autonSelector;
                 static rd::Console printConsole;
+                static rd::Console Tuning;
+                static rd::Selector TuningSelector;
         };
 
         class Actions {
@@ -111,8 +114,9 @@ class Robot {
             public: 
                 static void initAll();
                 static void colourSort();
+                static void TuningLogicLoop();
+                static bool isSorting;
             protected:
                 static void initPIDs();
-                static bool isSorting;
         };
 };

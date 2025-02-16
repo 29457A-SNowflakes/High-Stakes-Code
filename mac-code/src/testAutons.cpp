@@ -36,3 +36,23 @@ void Testers::Move24() {
     Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }
+
+
+void Testers::SqaureTest() {
+    Chassis* chassis = &Robot::chassis;
+
+    chassis->calibrate();
+    delay(1000);
+
+    chassis->setPose(0, 0, 0);
+    chassis->moveToPoint(0, 24, 1000);
+    chassis->turnToPoint(-24, 24, 1000, {.forwards=false});
+    chassis->moveToPoint(-24, 24, 1000, {.forwards=false});
+    chassis->turnToPoint(-24, 0, 1000);
+    chassis->moveToPoint(-24, 0, 1000);
+    chassis->turnToPoint(0, 0, 1000, {.forwards=false});
+    chassis->moveToPoint(0, 0, 1000, {.forwards=false});
+    chassis->turnToHeading(0, 1000);
+    chassis->waitUntilDone();
+    Robot::master.rumble(".");
+}

@@ -6,6 +6,7 @@
 #include "pros/optical.hpp"
 #include "pros/rotation.hpp"
 #include "robodash/views/console.hpp"
+#include "robodash/views/selector.hpp"
 #include "usr/robot.h"
 #include <map>
 #include <queue>
@@ -30,21 +31,21 @@ rd::Selector Robot::Screen::autonSelector ({
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
-Rotation trackingRotSens (13); // redo
+Rotation trackingRotSens (-7);
 
 TrackingWheel horiTrackingWheel (
 	&trackingRotSens,
 	lemlib::Omniwheel::NEW_2,
-	2.5
+	-1.75
 );
 
-Rotation vertTrackingSensor (11); // redo
+Rotation vertTrackingSensor (15);
 TrackingWheel vertTrackingWheel (
     &vertTrackingSensor,
-    Omniwheel::NEW_275,
-    1 // ??
+    Omniwheel::NEW_2,
+    -0.75 // ??
 );
-Imu Robot::Sensors::imu (5); // redo
+Imu Robot::Sensors::imu (14);
 
 OdomSensors Robot::Sensors::sensors (
     &vertTrackingWheel,
@@ -54,12 +55,12 @@ OdomSensors Robot::Sensors::sensors (
     &imu
 );
 
-adi::Pneumatics Robot::Pneumatics::Mogo ('a', true, false); // redo
-adi::Pneumatics Robot::Pneumatics::doinker ('b', false, false); // redo
-adi::Pneumatics Robot::Pneumatics::intakeLift ('c', false, true); // redo
+adi::Pneumatics Robot::Pneumatics::Mogo ('a', false, false); // redo
+adi::Pneumatics Robot::Pneumatics::doinker ('c', false, false); // redo
+adi::Pneumatics Robot::Pneumatics::intakeLift ('f', false, true); // redo
 
-MotorGroup leftDrive ({-16, 17, -4}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
-MotorGroup rightDrive ({-19, 18, 5}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg); // redo
+MotorGroup leftDrive ({19, -17, 18}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
+MotorGroup rightDrive ({-18, 16, 5}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
 
 Drivetrain Robot::Motors::dt (
     &leftDrive,
@@ -71,15 +72,15 @@ Drivetrain Robot::Motors::dt (
 );
 
 Motor Robot::Motors::hooksMotor (20, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
-Motor Robot::Motors::preRollerMotor (6, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // redo
+Motor Robot::Motors::preRollerMotor (3, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // ?
 
-Motor Robot::Motors::LBMotor (11, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
+Motor Robot::Motors::LBMotor (12, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
 
 //! RETUNE
 ControllerSettings Robot::latSettings (
-    14,
-    0,
-    11,
+    10,
+    0.1,
+    18,
     3,
     1,
     100,
@@ -88,15 +89,15 @@ ControllerSettings Robot::latSettings (
     20
 );
 ControllerSettings Robot::angSettings (
-    5,
-    0,
-    28,
+    2,
+    0.5,
+    29,
     3,
     1,
     180,
     3,
     700,
-    4
+    3
 );
 Chassis Robot::chassis (
     Motors::dt,
@@ -108,22 +109,22 @@ Chassis Robot::chassis (
 
 Motor* LadyBrown::motor = &Robot::Motors::LBMotor;
 
-Rotation Robot::Sensors::LBRotation (10); // redo
-adi::DigitalIn Robot::Sensors::LBLimiter ('E'); // redo
+Rotation Robot::Sensors::LBRotation (11);
+adi::DigitalIn Robot::Sensors::LBLimiter ('H');
 adi::DigitalIn* LadyBrown::limit = &Robot::Sensors::LBLimiter;
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
-const float LadyBrown::P_Gain = 2.4f;
+const float LadyBrown::P_Gain = 1.75f;
 const float LadyBrown::minPos = -100;
 const float LadyBrown::maxPos = 900;
-const float LadyBrown::exitError = 140;
-const float LadyBrown::timeout = 1100;
-const float LadyBrown::gearRatio = 12.0 / 36.0; // direct ?
+const float LadyBrown::exitError = 20;
+const float LadyBrown::timeout = 2000;
+const float LadyBrown::gearRatio = 1;
 
 string LadyBrown::currentState = "REST";
 std::map<string, float> LadyBrown::states = {
     std::pair<string, float> {"REST", 0},
-    std::pair<string, float> {"LOAD", 3150},
+    std::pair<string, float> {"LOAD", 200},
     std::pair<string, float> {"FLIP", 15000}
 };
 std::vector<string> LadyBrown::stateList = {"REST", "LOAD"};
@@ -132,8 +133,18 @@ bool LadyBrown::hasFinished = true;
 bool LadyBrown::manualControl = false;
 int LadyBrown::currentStateNum = 0;
 
-Optical Robot::Sensors::colourSens (3); // redo / find sens
-string Robot::playingColour = "BLUE";
-bool Robot::Inits::isSorting = false;
+Optical Robot::Sensors::colourSens (13);
+string Robot::playingColour = "RED";
+bool Robot::Inits::isSorting = true;
 
 bool Robot::Motors::intakeAutoControl = false;
+
+
+rd::Selector Robot::Screen::TuningSelector ({
+    {"Forward 24", Autons::Testers::Move24},
+    {"Forward 72", Autons::Testers::Move72},
+    {"Turning Test", Autons::Testers::TurnTest},
+    {"Turn 180", Autons::Testers::Turn180},
+    {"Square Movement", Autons::Testers::SqaureTest}
+});
+rd::Console Robot::Screen::Tuning ("PID Tuning");

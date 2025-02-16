@@ -1,8 +1,11 @@
 #include "main.h"
+#include "lemlib/pose.hpp"
 #include "pros/misc.h"
+#include "pros/misc.hpp"
 #include "pros/motors.h"
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
+#include "nlohmann/json.hpp"
 
 
 bool init;
@@ -20,16 +23,32 @@ void initialize() {
     Robot::Motors::LBMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 
-    while (init) {
+    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) && false) {
         delay(20);
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hasChangedColour = true;
             if (Robot::playingColour == "BLUE") Robot::playingColour = "RED";
             else Robot::playingColour = "BLUE";
-            Robot::master.print(1, 1, "COLOUR: %s", Robot::playingColour);
+            Robot::master.print(1, 1, "COLOUR: %s ", Robot::playingColour);
         }
     }
-    
+    Robot::master.clear_line(1);
+
+    Robot::Inits::TuningLogicLoop();
+
+    pros::Task x ([=] {
+        while (true) {
+            delay(1000);
+            Pose p = Robot::chassis.getPose();
+            nlohmann::json pkg {
+                {"X", p.x},
+                {"Y", p.y},
+                {"T", p.theta},
+            };
+            std::cout << pkg.dump() << "\n";
+        }
+    });
+    //Robot::master.rumble(". - .");
 }
 
 void autonomous() {
@@ -99,12 +118,20 @@ void opcontrol() {
 
             Robot::Actions::setIntake(-1, Intake_Action::BOTH);
 
-        } else Robot::Actions::setIntake(0, Intake_Action::BOTH);
+        } else if (!Robot::Motors::intakeAutoControl) {
+            Robot::Actions::setIntake(0, Intake_Action::BOTH);
+        }
 
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 
             LadyBrown::moveTo("LOAD");
 
+        }
+
+        if(master->get_digital(E_CONTROLLER_DIGITAL_X)) {
+            Robot::Inits::isSorting = false;
+        } else {
+            Robot::Inits::isSorting = true;
         }
         if (master->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
             LadyBrown::manualMove(1);
