@@ -24,10 +24,6 @@ Controller Robot::master (E_CONTROLLER_MASTER);
 
 rd::Selector Robot::Screen::autonSelector ({
     {"solo awp red", Autons::Match::Solo_AWP_Red},
-    {"solo awp BLUE", Autons::Match::Solo_AWP_Blue},
-    {"mogo side elim RED",  Autons::Match::Mogo_Side_Elims_R},
-    {"mogo side RED", Autons::Match::Mogo_Side_Elims_B},
-    {"SKILLS", Autons::Skills::Skills}
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
@@ -90,8 +86,8 @@ ControllerSettings Robot::latSettings (
 );
 ControllerSettings Robot::angSettings (
     2,
-    0.5,
-    29,
+    0,
+    30,
     3,
     1,
     180,
@@ -118,13 +114,13 @@ const float LadyBrown::P_Gain = 1.75f;
 const float LadyBrown::minPos = -100;
 const float LadyBrown::maxPos = 900;
 const float LadyBrown::exitError = 20;
-const float LadyBrown::timeout = 2000;
+float LadyBrown::timeout = 2000;
 const float LadyBrown::gearRatio = 1;
 
 string LadyBrown::currentState = "REST";
 std::map<string, float> LadyBrown::states = {
     std::pair<string, float> {"REST", 0},
-    std::pair<string, float> {"LOAD", 200},
+    std::pair<string, float> {"LOAD", 1200},
     std::pair<string, float> {"FLIP", 15000}
 };
 std::vector<string> LadyBrown::stateList = {"REST", "LOAD"};
@@ -148,3 +144,5 @@ rd::Selector Robot::Screen::TuningSelector ({
     {"Square Movement", Autons::Testers::SqaureTest}
 });
 rd::Console Robot::Screen::Tuning ("PID Tuning");
+
+int Robot::Actions::timesSorted = 0;

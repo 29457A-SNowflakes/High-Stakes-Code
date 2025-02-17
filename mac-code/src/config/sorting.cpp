@@ -11,7 +11,7 @@ bool isColour(float colour, float seeing, float maxError=5) {
     if (error <= maxError) return true;
     else return false;
 }
-int timeTillFling = 85;
+int timeTillFling = 100;
 int cooldown = 500;
 void Robot::Inits::colourSort() {
     Optical* sens = &Robot::Sensors::colourSens;
@@ -33,9 +33,12 @@ void Robot::Inits::colourSort() {
             if (shouldFling && sens->get_proximity() >= 200 && isSorting && (millis()-cooldownStart) >= cooldown) {
                 std::cout << sens->get_proximity() << "\n";
                 delay(timeTillFling);
+                int prev = Robot::Motors::hooksMotor.get_direction();
                 Actions::FlingRing(false, 150);
+                Robot::Actions::setIntake(prev, SECOND);
                 shouldFling = false;
                 cooldownStart = millis();
+                Robot::Actions::timesSorted++;
                 Robot::master.rumble(". .");
             }
         }

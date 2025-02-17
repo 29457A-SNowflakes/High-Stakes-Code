@@ -31,7 +31,7 @@ class LadyBrown {
 
         static const float P_Gain;
 
-        static const float timeout;
+        static float timeout;
 
         static const float gearRatio;
 
@@ -77,6 +77,7 @@ class Robot {
 
         class Actions {
             public:
+                static int timesSorted;
                 static void setIntake (int dir, Intake_Action type);
                 static void setIntakeFor (int dir, Intake_Action type, int time, bool async=true);
 

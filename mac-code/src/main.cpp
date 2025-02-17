@@ -6,7 +6,7 @@
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "nlohmann/json.hpp"
-
+#include "usr/autons.h"
 
 bool init;
 
@@ -34,7 +34,6 @@ void initialize() {
     }
     Robot::master.clear_line(1);
 
-    Robot::Inits::TuningLogicLoop();
 
     pros::Task x ([=] {
         while (true) {
@@ -60,7 +59,8 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Robot::Screen::autonSelector.run_auton();
+    Autons::Match::Solo_AWP_Red();
+    //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");
