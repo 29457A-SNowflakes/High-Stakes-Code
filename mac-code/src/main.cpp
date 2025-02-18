@@ -32,7 +32,7 @@ void initialize() {
             Robot::master.print(1, 1, "COLOUR: %s ", Robot::playingColour);
         }
     }
-    Robot::master.clear_line(1);
+    //Robot::master.clear_line(1);
 
 
     pros::Task x ([=] {
@@ -59,7 +59,7 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Autons::Match::Solo_AWP_Red();
+    Autons::Match::Red_Ring_Side();
     //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();

@@ -24,6 +24,7 @@ Controller Robot::master (E_CONTROLLER_MASTER);
 
 rd::Selector Robot::Screen::autonSelector ({
     {"solo awp red", Autons::Match::Solo_AWP_Red},
+    {"Red ring side", Autons::Match::Red_Ring_Side}
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
@@ -39,7 +40,7 @@ Rotation vertTrackingSensor (15);
 TrackingWheel vertTrackingWheel (
     &vertTrackingSensor,
     Omniwheel::NEW_2,
-    -0.75 // ??
+    -0.75
 );
 Imu Robot::Sensors::imu (14);
 
@@ -61,20 +62,20 @@ MotorGroup rightDrive ({-18, 16, 5}, pros::MotorGears::blue, pros::v5::MotorEnco
 Drivetrain Robot::Motors::dt (
     &leftDrive,
     &rightDrive,
-    11, // measure
-    2.75,  
-    450,
-    8
+    10, // measure
+    3.25,  
+    400,
+    2
 );
 
 Motor Robot::Motors::hooksMotor (20, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
-Motor Robot::Motors::preRollerMotor (3, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // ?
+Motor Robot::Motors::preRollerMotor (4, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // ?
 
 Motor Robot::Motors::LBMotor (12, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
 
 //! RETUNE
 ControllerSettings Robot::latSettings (
-    10,
+    9.5,
     0.1,
     18,
     3,
@@ -85,13 +86,13 @@ ControllerSettings Robot::latSettings (
     20
 );
 ControllerSettings Robot::angSettings (
-    2,
+    3,
     0,
-    30,
+    25,
     3,
     1,
     180,
-    3,
+    2,
     700,
     3
 );
