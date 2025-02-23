@@ -22,6 +22,7 @@ void initialize() {
     Robot::Screen::printConsole.println(" -- Initialize --");
     Robot::Motors::LBMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
+    //LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
 
     while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) && false) {
         delay(20);
@@ -37,7 +38,7 @@ void initialize() {
 
     pros::Task x ([=] {
         while (true) {
-            delay(1000);
+            delay(500);
             Pose p = Robot::chassis.getPose();
             nlohmann::json pkg {
                 {"X", p.x},
@@ -47,10 +48,12 @@ void initialize() {
             std::cout << pkg.dump() << "\n";
         }
     });
+    //Robot::Inits::TuningLogicLoop();
     //Robot::master.rumble(". - .");
 }
 
 void autonomous() {
+    int prevTimeout = LadyBrown::timeout;
     Robot::Pneumatics::Mogo.retract();
     Robot::Screen::printConsole.focus();
     //Robot::Inits::colourSort(Robot::playingColour);
@@ -64,6 +67,7 @@ void autonomous() {
 
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");
+    LadyBrown::timeout = prevTimeout;
     
 }
 

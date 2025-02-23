@@ -18,6 +18,7 @@ void Testers::TurnTest() {
 void Testers::Turn180() {
     Robot::chassis.calibrate();
     delay(1000);
+    Robot::chassis.setPose(0,0,0);
     Robot::chassis.turnToHeading(180, 1000);
     Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
@@ -25,13 +26,15 @@ void Testers::Turn180() {
 void Testers::Move72() {
     Robot::chassis.calibrate();
     delay(1000);
-    Robot::chassis.moveToPoint(0, 72, 1000);
+    Robot::chassis.setPose(0,0,0);
+    Robot::chassis.moveToPoint(0, 72, 10000);
     Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }
 void Testers::Move24() {
     Robot::chassis.calibrate();
     delay(1000);
+    Robot::chassis.setPose(0, 0, 0);
     Robot::chassis.moveToPoint(0, 24, 1000);
     Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");

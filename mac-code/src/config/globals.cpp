@@ -8,6 +8,7 @@
 #include "robodash/views/console.hpp"
 #include "robodash/views/selector.hpp"
 #include "usr/robot.h"
+#include <cstddef>
 #include <map>
 #include <queue>
 #include <string>
@@ -32,14 +33,14 @@ Rotation trackingRotSens (-7);
 
 TrackingWheel horiTrackingWheel (
 	&trackingRotSens,
-	lemlib::Omniwheel::NEW_2,
+	2,
 	-1.75
 );
 
 Rotation vertTrackingSensor (15);
 TrackingWheel vertTrackingWheel (
     &vertTrackingSensor,
-    Omniwheel::NEW_2,
+    2,
     -0.75
 );
 Imu Robot::Sensors::imu (14);
@@ -62,7 +63,7 @@ MotorGroup rightDrive ({-18, 16, 5}, pros::MotorGears::blue, pros::v5::MotorEnco
 Drivetrain Robot::Motors::dt (
     &leftDrive,
     &rightDrive,
-    10, // measure
+    10.325, // measure
     3.25,  
     400,
     2
@@ -75,20 +76,20 @@ Motor Robot::Motors::LBMotor (12, v5::MotorGears::green, v5::MotorEncoderUnits::
 
 //! RETUNE
 ControllerSettings Robot::latSettings (
-    9.5,
-    0.1,
-    18,
+    8.5,
+    0,
+    20,
     3,
     1,
     100,
     2.5,
     500,
-    20
+    50
 );
 ControllerSettings Robot::angSettings (
-    3,
+    2,
     0,
-    25,
+    30,
     3,
     1,
     180,
@@ -111,7 +112,7 @@ adi::DigitalIn Robot::Sensors::LBLimiter ('H');
 adi::DigitalIn* LadyBrown::limit = &Robot::Sensors::LBLimiter;
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
-const float LadyBrown::P_Gain = 1.75f;
+const float LadyBrown::P_Gain = 1.6f;
 const float LadyBrown::minPos = -100;
 const float LadyBrown::maxPos = 900;
 const float LadyBrown::exitError = 20;
@@ -121,7 +122,7 @@ const float LadyBrown::gearRatio = 1;
 string LadyBrown::currentState = "REST";
 std::map<string, float> LadyBrown::states = {
     std::pair<string, float> {"REST", 0},
-    std::pair<string, float> {"LOAD", 1200},
+    std::pair<string, float> {"LOAD", 1000},
     std::pair<string, float> {"FLIP", 15000}
 };
 std::vector<string> LadyBrown::stateList = {"REST", "LOAD"};

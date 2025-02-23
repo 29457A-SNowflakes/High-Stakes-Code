@@ -8,11 +8,11 @@ using namespace lemlib;
 using namespace std;    
 using namespace utils;
 void Robot::Inits::initAll() {
-    pros::c::serctl(SERCTL_DISABLE_COBS, nullptr);
+    //pros::c::serctl(SERCTL_DISABLE_COBS, nullptr);
     Robot::Sensors::LBRotation.reset_position();
     chassis.calibrate();
     //initPIDs();
-    delay(000);
+    delay(1000);
 
     Robot::Inits::colourSort();
 

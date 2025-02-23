@@ -11,7 +11,7 @@ bool isColour(float colour, float seeing, float maxError=5) {
     if (error <= maxError) return true;
     else return false;
 }
-int timeTillFling = 105;
+int timeTillFling = 110;
 int cooldown = 500;
 void Robot::Inits::colourSort() {
     Optical* sens = &Robot::Sensors::colourSens;
