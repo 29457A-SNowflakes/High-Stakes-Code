@@ -12,6 +12,8 @@ namespace Autons {
         void Solo_AWP_Red();
 
         void Red_Ring_Side();
+
+        void Red_Mogo_RUSH();
     }
     namespace Skills {
         void Skills();

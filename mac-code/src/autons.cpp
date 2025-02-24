@@ -140,3 +140,44 @@ void Autons::Match::Red_Ring_Side() {
     delay(10000);
     return;
 }
+ASSET(rushPathRed_txt)
+void Autons::Match::Red_Mogo_RUSH() {
+    Chassis* chassis = &Robot::chassis;
+    Robot::Pneumatics::Mogo.retract();
+    // 57.9, 13.1
+    if (!competition::is_field_control()) {
+        chassis->calibrate();
+        delay(2000);
+    }
+    int startTime = millis();
+    chassis->setPose(-51.2, -58, 90);
+    Robot::Actions::setIntake(1, FIRST);
+    chassis->follow(rushPathRed_txt, 8, 1300);
+    chassis->waitUntil(5);
+    Robot::Pneumatics::doinker.extend();
+    chassis->waitUntilDone();
+    chassis->moveToPoint(-48, -46, 1000, {.forwards=false, .minSpeed=30});
+    delay(50);
+    Robot::Pneumatics::doinker.retract();
+    chassis->waitUntilDone();
+    chassis->turnToHeading(270, 700, {.direction=lemlib::AngularDirection::CCW_COUNTERCLOCKWISE, .minSpeed=90});
+    chassis->moveToPoint(-65, -55, 300);
+    chassis->waitUntilDone();
+    delay(1000);
+    chassis->moveToPoint(-26, -58, 1300, {.forwards=false, .maxSpeed=70});
+    chassis->waitUntilDone();
+    Robot::Pneumatics::Mogo.extend();
+    chassis->waitUntilDone();
+    delay(190);
+    Robot::Actions::setIntake(1, BOTH);
+    delay(950);
+    Robot::Pneumatics::Mogo.retract();
+    Robot::Actions::setIntake(-1, SECOND);
+    chassis->moveToPoint(-24, -46, 800);
+    chassis->turnToPoint(-24, -24, 800, {.forwards=false});
+    chassis->moveToPoint(-23, -30, 1400, {.forwards=false});
+    chassis->waitUntilDone();
+    Robot::Pneumatics::Mogo.extend();
+    Robot::master.rumble("-");
+    delay(5000);
+}

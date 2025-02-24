@@ -62,7 +62,7 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Autons::Match::Red_Ring_Side();
+    Autons::Match::Red_Mogo_RUSH();
     //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();
@@ -78,7 +78,7 @@ void opcontrol() {
     pros::Controller* master = &Robot::master;
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println("-- Driver Control --");
-    
+    LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
     
     bool waitingForLBReset = false;
     while (true) {
