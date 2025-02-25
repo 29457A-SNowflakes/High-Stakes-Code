@@ -146,7 +146,9 @@ void LadyBrown::manualMove(int dir) {
     else if (!manualControl) {
         manualControl = true;
         while (!hasFinished) pros::delay(15);
-        Robot::Actions::FlingRing(true);
+        if (dir == 1) {
+            Robot::Actions::FlingRing(true, 30);
+        }
     }
     
     motor->move(127 * dir);
