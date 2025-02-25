@@ -62,7 +62,8 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Autons::Match::Red_Mogo_RUSH();
+    //Autons::Match::Red_Mogo_RUSH();
+    Autons::Skills::Skills();
     //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();
@@ -74,11 +75,11 @@ void autonomous() {
 void opcontrol() {
     Robot::Screen::printConsole.focus();
     //Robot::Inits::colourSort(Robot::playingColour);
+    Robot::Sensors::LBRotation.set_position(LadyBrown::states["LOAD"]+650);
     init = false;
     pros::Controller* master = &Robot::master;
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println("-- Driver Control --");
-    LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
     
     bool waitingForLBReset = false;
     while (true) {
@@ -86,7 +87,7 @@ void opcontrol() {
         int leftX = master->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         int leftY = master->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 
-        if (leftY >= 20) {
+        if (leftY >= 15) {
 
             Robot::chassis.arcade(leftY, leftX);
 
@@ -106,7 +107,7 @@ void opcontrol() {
         }
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
 
-            Robot::Pneumatics::intakeLift.toggle();
+            LadyBrown::moveTo("DESCORE");
 
         }
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {

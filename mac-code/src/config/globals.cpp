@@ -112,18 +112,18 @@ adi::DigitalIn Robot::Sensors::LBLimiter ('H');
 adi::DigitalIn* LadyBrown::limit = &Robot::Sensors::LBLimiter;
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
-const float LadyBrown::P_Gain = 2.9f;
-const float LadyBrown::minPos = -100;
-const float LadyBrown::maxPos = 900;
+const float LadyBrown::P_Gain = 2.6f;
+const float LadyBrown::minPos = -100; // not used
+const float LadyBrown::maxPos = 900; // not used
 const float LadyBrown::exitError = 150;
 float LadyBrown::timeout = 2000;
 const float LadyBrown::gearRatio = 1;
 
 string LadyBrown::currentState = "REST";
 std::map<string, float> LadyBrown::states = {
-    std::pair<string, float> {"REST", 0},
-    std::pair<string, float> {"LOAD", 850},
-    std::pair<string, float> {"FLIP", 15000}
+    std::pair<string, float> {"REST", -300},
+    std::pair<string, float> {"LOAD", 430},
+    std::pair<string, float> {"DESCORE", 15000}
 };
 std::vector<string> LadyBrown::stateList = {"REST", "LOAD"};
 bool LadyBrown::cancel = false;
