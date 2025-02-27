@@ -84,7 +84,7 @@ ControllerSettings Robot::latSettings (
     100,
     2.5,
     500,
-    80
+    15
 );
 ControllerSettings Robot::angSettings (
     2,

@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "nats!",
+    "project_name": "auton skills",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -341,9 +341,9 @@
     },
     "upload_options": {
       "after": "run",
-      "description": "proj for nuast",
+      "description": "",
       "icon": "pizza",
-      "slot": 1
+      "slot": 3
     },
     "use_early_access": false
   }
