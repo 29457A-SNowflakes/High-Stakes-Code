@@ -147,7 +147,7 @@ void LadyBrown::manualMove(int dir) {
         manualControl = true;
         while (!hasFinished) pros::delay(15);
         if (dir == 1) {
-            Robot::Actions::FlingRing(true, 30);
+            //Robot::Actions::FlingRing(true, 30);
         }
     }
     
