@@ -29,7 +29,7 @@ rd::Selector Robot::Screen::autonSelector ({
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
-Rotation trackingRotSens (-7);
+Rotation trackingRotSens (7);
 
 TrackingWheel horiTrackingWheel (
 	&trackingRotSens,
@@ -84,7 +84,7 @@ ControllerSettings Robot::latSettings (
     100,
     2.5,
     500,
-    50
+    80
 );
 ControllerSettings Robot::angSettings (
     2,

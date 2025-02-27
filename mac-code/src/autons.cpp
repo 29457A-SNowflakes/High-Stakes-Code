@@ -11,9 +11,9 @@ using namespace lemlib;
 using namespace pros;
 
 
-void Autons::Match::Solo_AWP_Red(){
+void Autons::Match::Red_Ring_Side(){
     Chassis* chassis = &Robot::chassis;
-    LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
+    LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]+630);
     Robot::Pneumatics::Mogo.retract();
     // 57.9, 13.1
     if (!competition::is_field_control()) {
@@ -21,55 +21,94 @@ void Autons::Match::Solo_AWP_Red(){
         delay(1000);
     }
     int startTime = millis();
-    chassis->setPose(-58.5, 15.5, 180);
-    
-    chassis->turnToPoint(-72, -24, 300, {.minSpeed=90});
-    chassis->moveToPoint(-72, -24, 180);
+    chassis->setPose(-52.7, 15.5, 180);
+    chassis->turnToHeading(225, 500);
+    chassis->moveToPoint(-59, 10, 500);
     chassis->waitUntilDone();
-    chassis->turnToPoint(-72, -24, 500, {.maxSpeed=60});
-    LadyBrown::timeout = 800;
+
+    LadyBrown::timeout=900;
     LadyBrown::moveToPoint(19000);
-    chassis->moveToPoint(-55, 30, 600, {.forwards=false, .minSpeed=60});
-    chassis->waitUntilDone();
+
+    chassis->moveToPoint(-43, 40, 1000, {.forwards=false});
+    chassis->waitUntil(5);
     LadyBrown::moveTo("REST");
-    chassis->turnToPoint(-26, 39, 400, {.forwards=false, .minSpeed=20});
-    chassis->moveToPoint(-26, 39, 700, {.forwards=false, .maxSpeed=100});
     chassis->waitUntilDone();
+
+    chassis->turnToHeading(304, 800);
+    chassis->moveToPoint(-19, 37, 1000, {.forwards=false});
+    chassis->waitUntilDone();
+
     Robot::Pneumatics::Mogo.extend();
-    chassis->turnToPoint(-37, 50, 600);
+
+    chassis->turnToHeading(20, 800);
     chassis->waitUntilDone();
+    chassis->moveToPoint(-5, 55, 1400, {.maxSpeed=90});
+    chassis->waitUntil(5);
     Robot::Actions::setIntake(1, BOTH);
-    chassis->moveToPoint(-37, 56, 800, {.minSpeed=30});
+    chassis->moveToPoint(-18, 37, 900, {.forwards=false});
+    chassis->turnToHeading(0, 900);
+    chassis->moveToPoint(-23, 62, 900);
+    chassis->turnToHeading(66, 900);
+    chassis->moveToPoint(-3, 66, 1200);
+    chassis->moveToPoint(-20, 67, 1000, {.forwards=false});
+    chassis->turnToHeading(260, 800);
+    chassis->moveToPoint(-65, 84, 2000, {.minSpeed=20});
+    chassis->moveToPoint(-30, 42, 2000, {.forwards=false, .minSpeed=80});
+    chassis->turnToHeading(180, 1000);
     chassis->waitUntilDone();
-    delay(200);
-    chassis->turnToHeading(270, 600);
-    chassis->moveToPose(-67, 5, 180, 1500);
-    chassis->turnToPoint(-67, -30, 700);
-    chassis->moveToPoint(-67, -34, 700, {.maxSpeed=70});
-    chassis->waitUntilDone();
-    delay(2000);
-    Robot::Pneumatics::Mogo.retract();
-    Robot::Actions::setIntake(0, SECOND);
-    chassis->moveToPoint(-67, -48, 500);
-    chassis->turnToPoint(-43, -7, 500, {.forwards=false, .minSpeed=60});
-    chassis->moveToPoint(-43, 0, 1200, {.forwards=false});
-    chassis->waitUntilDone();
-    Robot::Pneumatics::Mogo.extend();
-    delay(130);
-    chassis->turnToPoint(-52, -30, 800);
-    chassis->waitUntilDone();
-    Robot::Actions::setIntake(1, SECOND);
-    chassis->moveToPoint(-52, -36, 1000);
-    chassis->waitUntilDone();
-    delay(800);
-    pros::Task t ([=] {
-        LadyBrown::moveToPoint(9000);
-    });
-    chassis->moveToPose(-30, 25, 180+45, 4000,{.forwards=false});
-    Robot::master.rumble("-");
-    delay(2000);
+    delay(3000);
+    return;
+    
 }
-void Autons::Match::Red_Ring_Side() {
+void Autons::Match::Blue_Ring_Side(){
+    Robot::playingColour="BLUE";
+    Chassis* chassis = &Robot::chassis;
+    LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]+630);
+    Robot::Pneumatics::Mogo.retract();
+    // 57.9, 13.1
+    if (!competition::is_field_control()) {
+        chassis->calibrate();
+        delay(1000);
+    }
+    int startTime = millis();
+    chassis->setPose(52.7, 15.5, 180);
+    chassis->turnToHeading(-225, 500);
+    chassis->moveToPoint(59, 10, 500);
+    chassis->waitUntilDone();
+    LadyBrown::timeout=900;
+    LadyBrown::moveToPoint(19000);
+
+    chassis->moveToPoint(43, 40, 1000, {.forwards=false});
+    chassis->waitUntil(5);
+    LadyBrown::moveTo("REST");
+    chassis->waitUntilDone();
+
+    chassis->turnToHeading(-304, 800);
+    chassis->moveToPoint(19, 37, 1000, {.forwards=false});
+    chassis->waitUntilDone();
+
+    Robot::Pneumatics::Mogo.extend();
+
+    chassis->turnToHeading(-20, 800);
+    chassis->waitUntilDone();
+    chassis->moveToPoint(5, 55, 1400, {.maxSpeed=90});
+    chassis->waitUntil(5);
+    Robot::Actions::setIntake(1, BOTH);
+    chassis->moveToPoint(18, 37, 900, {.forwards=false});
+    chassis->turnToHeading(0, 900);
+    chassis->moveToPoint(23, 62, 900);
+    chassis->turnToHeading(-66, 900);
+    chassis->moveToPoint(3, 66, 1200);
+    chassis->moveToPoint(20, 67, 1000, {.forwards=false});
+    chassis->turnToHeading(-260, 800);
+    chassis->moveToPoint(65, 84, 2000, {.minSpeed=20});
+    chassis->moveToPoint(30, 42, 2000, {.forwards=false, .minSpeed=80});
+    chassis->turnToHeading(180, 1000);
+    chassis->waitUntilDone();
+    delay(3000);
+    return;
+}
+void Autons::Match::Solo_AWP_Red() {
     Chassis* chassis = &Robot::chassis;
     LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]+650);
     Robot::Pneumatics::Mogo.retract();
