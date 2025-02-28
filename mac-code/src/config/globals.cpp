@@ -109,7 +109,6 @@ Motor* LadyBrown::motor = &Robot::Motors::LBMotor;
 
 Rotation Robot::Sensors::LBRotation (11);
 adi::DigitalIn Robot::Sensors::LBLimiter ('H');
-adi::DigitalIn* LadyBrown::limit = &Robot::Sensors::LBLimiter;
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
 const float LadyBrown::P_Gain = 2.6f;

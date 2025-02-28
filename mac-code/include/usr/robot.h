@@ -17,37 +17,36 @@ using namespace std;
 
 class LadyBrown {
     public:
-        static void moveTo (string action, bool async=true);
-        static void cycle ();
-        static void manualMove(int dir);
+        static void moveTo (string action, bool async=true); // Moves to a macor position, taking name as input
+        static void cycle (); // cycles between available macros
+        static void manualMove(int dir); // allows for overriding manual control
 
-        static string currentState;
-        static std::map<string, float> states;
-        static vector<string> stateList;
+        static string currentState; // the current state of the wall stake
+        static std::map<string, float> states; // the dictionary of states - contains name and rotational position of each
+        static vector<string> stateList; // the iterable list of states used by cycle()
 
-        static const float minPos;
-        static const float maxPos;
-        static const float exitError;
+        static const float minPos; // minimum position allowed
+        static const float maxPos; // maximum position allowed
+        static const float exitError; // the maximum error the P controller will exit on
 
-        static const float P_Gain;
+        static const float P_Gain; // The P gain, must be tuned
 
-        static float timeout;
+        static float timeout; // maximum time allowed for P controller
 
-        static const float gearRatio;
+        static const float gearRatio; // gear ratio on rotation sensor
 
-        static Rotation* rotSens;
-        static adi::DigitalIn* limit;
-        static Motor* motor;
+        static Rotation* rotSens; // Pointer to rotation sensor
+        static Motor* motor; // pointer to the LB motor
 
-        static void moveToPoint(float point, bool toRest=false);
+        static void moveToPoint(float point, bool toRest=false); // generic function to move to rotational position (centidegrees)
 
-        static void waitForFinish();
+        static void waitForFinish(); // wait for P controller to finish
         
     protected:
-        static bool manualControl;
-        static bool cancel;
-        static bool hasFinished;
-        static int currentStateNum;
+        static bool manualControl; // is under overriding control
+        static bool cancel; // should action be canceled
+        static bool hasFinished; // has controller finished
+        static int currentStateNum; // the index of the current state, in 'stateList'
 
 
 };

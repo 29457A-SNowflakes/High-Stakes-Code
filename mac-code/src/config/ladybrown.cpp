@@ -110,7 +110,7 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
     if (toRest && false) {
         elapsed = pros::millis()-startTime;
         Robot::master.rumble("-");
-        while (limit->get_value()  && !cancel && !manualControl && elapsed < timeout) {
+        while (!cancel && !manualControl && elapsed < timeout) {
             delay(20);
             motor->move(-127);
         }
@@ -136,10 +136,6 @@ void LadyBrown::manualMove(int dir) {
         manualControl = false;
         if (hasFinished) {
             motor->move(0);
-            if (limit->get_value()) {
-                currentState = "REST";
-                rotSens->reset_position();
-            }
         }
         return;
     }
