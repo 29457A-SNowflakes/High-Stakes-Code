@@ -74,7 +74,7 @@ Motor Robot::Motors::preRollerMotor (4, v5::MotorGears::green, v5::MotorEncoderU
 
 Motor Robot::Motors::LBMotor (12, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
 
-//! RETUNE
+// retune for worlds
 ControllerSettings Robot::latSettings (
     8.5,
     0,

@@ -8,16 +8,17 @@ using namespace lemlib;
 using namespace std;    
 using namespace utils;
 void Robot::Inits::initAll() {
-    //pros::c::serctl(SERCTL_DISABLE_COBS, nullptr);
+
     Robot::Sensors::LBRotation.reset_position();
     chassis.calibrate();
-    //initPIDs();
+    initPIDs();
+    TuningLogicLoop();
     delay(1000);
 
     Robot::Inits::colourSort();
 
 }
-/*
+
 void Robot::Inits::initPIDs() {
 
 	float LatP = load_value("latP");
@@ -28,20 +29,19 @@ void Robot::Inits::initPIDs() {
 	float AngularI = load_value("angI");
 	float AngularD = load_value("angD");
 
-	Auton::Tuning::latController.kP = LatP;
-    Auton::Tuning::latController.kI = LatI;
-    Robot::Auton::Tuning::latController.kD = LatD;
+	latSettings.kP = LatP;
+    latSettings.kI = LatI;
+    latSettings.kD = LatD;
 
-    Auton::Tuning::angularController.kP = AngularP;
-    Auton::Tuning::angularController.kI = AngularI;
-    Auton::Tuning::angularController.kD = AngularD;
+    angSettings.kP = AngularP;
+    angSettings.kI = AngularI;
+    angSettings.kD = AngularD;
         
-    chassis.changeAngularP(10);
-    chassis.changeAngularI(0);
-    chassis.changeAngularD(5);
+    chassis.changeAngularP(AngularP);
+    chassis.changeAngularI(AngularI);
+    chassis.changeAngularD(AngularD);
 	
-	chassis.changeLatP(8);
-	chassis.changeLatI(0);
-	chassis.changeLatD(4);
+	chassis.changeLatP(LatP);
+	chassis.changeLatI(LatI);
+	chassis.changeLatD(LatD);
 }
-*/
