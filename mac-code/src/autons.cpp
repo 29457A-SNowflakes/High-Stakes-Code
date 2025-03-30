@@ -12,6 +12,7 @@ using namespace pros;
 
 
 void Autons::Match::Red_Ring_Side(){
+    Robot::playingColour="RED";
     Chassis* chassis = &Robot::chassis;
     LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]+630);
     Robot::Pneumatics::Mogo.retract();
@@ -22,7 +23,7 @@ void Autons::Match::Red_Ring_Side(){
     }
     int startTime = millis();
     chassis->setPose(-52.7, 15.5, 180);
-    chassis->turnToHeading(225, 500);
+    chassis->turnToHeading(225, 600);
     chassis->moveToPoint(-59, 10, 500);
     chassis->waitUntilDone();
 
@@ -35,22 +36,31 @@ void Autons::Match::Red_Ring_Side(){
     chassis->waitUntilDone();
 
     chassis->turnToHeading(304, 800);
-    chassis->moveToPoint(-19, 37, 1000, {.forwards=false});
+    chassis->moveToPoint(-18, 35, 1300, {.forwards=false, .minSpeed=80});
     chassis->waitUntilDone();
 
     Robot::Pneumatics::Mogo.extend();
 
-    chassis->turnToHeading(20, 800);
+    chassis->turnToHeading(0, 800);
+    chassis->moveToPoint(-8.4, 42.2, 1000);
     chassis->waitUntilDone();
-    chassis->moveToPoint(-5, 55, 1400, {.maxSpeed=90});
+    chassis->moveToPoint(-3.5, 54, 1400, {.maxSpeed=90});
     chassis->waitUntil(5);
     Robot::Actions::setIntake(1, BOTH);
-    chassis->moveToPoint(-18, 37, 900, {.forwards=false});
+    chassis->waitUntilDone();
+    delay(300);
+    chassis->moveToPoint(-16.5, 35, 900, {.forwards=false});
     chassis->turnToHeading(0, 900);
     chassis->moveToPoint(-23, 62, 900);
-    chassis->turnToHeading(66, 900);
-    chassis->moveToPoint(-3, 66, 1200);
+    chassis->waitUntilDone();
+    chassis->turnToHeading(55, 900);
+    chassis->moveToPoint(-2.5, 67, 1200);
     chassis->moveToPoint(-20, 67, 1000, {.forwards=false});
+    chassis->turnToHeading(180, 1000);
+    chassis->moveToPoint(-40, 10, 1000);
+    chassis->waitUntilDone();
+    delay(5000);
+    return;
     chassis->turnToHeading(260, 800);
     chassis->moveToPoint(-65, 84, 2000, {.minSpeed=20});
     chassis->moveToPoint(-30, 42, 2000, {.forwards=false, .minSpeed=80});
@@ -66,39 +76,42 @@ void Autons::Match::Blue_Ring_Side(){
     LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]+630);
     Robot::Pneumatics::Mogo.retract();
     // 57.9, 13.1
-    if (!competition::is_field_control()) {
+    if (!competition::is_field_control() && false) {
         chassis->calibrate();
         delay(1000);
     }
     int startTime = millis();
     chassis->setPose(52.7, 15.5, 180);
-    chassis->turnToHeading(-225, 500);
-    chassis->moveToPoint(59, 10, 500);
+    chassis->turnToHeading(138, 600);
+    chassis->moveToPoint(58.5, 6.8, 350, {.maxSpeed=80});
     chassis->waitUntilDone();
     LadyBrown::timeout=900;
     LadyBrown::moveToPoint(19000);
-    return;
-    chassis->moveToPoint(43, 40, 1000, {.forwards=false});
+    chassis->moveToPoint(39.5, 32, 1000, {.forwards=false}); 
     chassis->waitUntil(5);
     LadyBrown::moveTo("REST");
     chassis->waitUntilDone();
-
-    chassis->turnToHeading(-304, 800);
-    chassis->moveToPoint(19, 37, 1000, {.forwards=false});
+    chassis->turnToHeading(80, 800);
+    chassis->moveToPoint(25.5, 28, 2000, {.forwards=false, .maxSpeed=80});
     chassis->waitUntilDone();
 
     Robot::Pneumatics::Mogo.extend();
 
-    chassis->turnToHeading(-20, 800);
+    chassis->turnToHeading(0, 800);
     chassis->waitUntilDone();
-    chassis->moveToPoint(5, 55, 1400, {.maxSpeed=90});
+    chassis->moveToPoint(11, 52.6, 1400, {.maxSpeed=90});
     chassis->waitUntil(5);
     Robot::Actions::setIntake(1, BOTH);
-    chassis->moveToPoint(18, 37, 900, {.forwards=false});
+    chassis->waitUntilDone();
+    chassis->moveToPoint(26, 37, 900, {.forwards=false});
     chassis->turnToHeading(0, 900);
-    chassis->moveToPoint(23, 62, 900);
+    chassis->waitUntilDone();
+    chassis->moveToPoint(29, 60, 900);
+    chassis->waitUntilDone();
+    delay(1000);
     chassis->turnToHeading(-66, 900);
-    chassis->moveToPoint(3, 66, 1200);
+    chassis->moveToPoint(11, 63, 1200);
+    chassis->waitUntilDone(); return;
     chassis->moveToPoint(20, 67, 1000, {.forwards=false});
     chassis->turnToHeading(-260, 800);
     chassis->moveToPoint(65, 84, 2000, {.minSpeed=20});

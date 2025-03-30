@@ -24,7 +24,7 @@ using namespace std;
 Controller Robot::master (E_CONTROLLER_MASTER);
 
 rd::Selector Robot::Screen::autonSelector ({
-    {"solo awp red", Autons::Match::Solo_AWP_Red},
+    {"Blue ring side", Autons::Match::Blue_Ring_Side},
     {"Red ring side", Autons::Match::Red_Ring_Side}
 });
 rd::Console Robot::Screen::printConsole ("Printing");

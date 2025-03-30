@@ -63,8 +63,7 @@ void autonomous() {
     Robot::Screen::printConsole.println(" Running Auton...");
 
     //Autons::Match::Red_Mogo_RUSH();
-    Autons::Skills::Skills();
-    //Robot::Screen::autonSelector.run_auton();
+    Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");
@@ -105,7 +104,7 @@ void opcontrol() {
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
             Robot::Pneumatics::doinker.toggle();
         }
-        if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+        if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
 
             LadyBrown::moveTo("DESCORE");
 
