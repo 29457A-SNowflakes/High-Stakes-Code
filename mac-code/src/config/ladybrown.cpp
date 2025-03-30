@@ -1,4 +1,5 @@
 #include "pros/misc.h"
+#include "pros/rtos.h"
 #include "pros/rtos.hpp"
 #include "usr/robot.h"
 #include "usr/utils.h"
@@ -15,39 +16,32 @@ using namespace std;
 
 void LadyBrown::moveToPoint(float point, bool toRest) {
     hasFinished = false;
-    float targ = point;
     float pos = rotSens->get_position() * gearRatio;
-    float error = targ - pos;
+    float error = point - pos;
 
     float startTime = pros::millis();
     float elapsed = pros::millis()-startTime;
-    if (toRest && false) {
-        elapsed = pros::millis()-startTime;
-        Robot::master.rumble("-");
-        while (!cancel && !manualControl && elapsed < timeout) {
-            delay(20);
-            motor->move(-127);
-        }
-        motor->move(0);
-        rotSens->reset_position();
-        hasFinished = true;
-        return;
-    }
-    while (std::abs(error) > exitError && !manualControl && !cancel && elapsed < timeout) {
-        elapsed = pros::millis()-startTime;
+
+    while (elapsed < timeout && !cancel && error < exitError) {
+
+        elapsed = millis()-startTime;
+
         pos = rotSens->get_position() * gearRatio;
-        error = targ-pos;
-        float cmd = lbPID.kP * error;
-        cmd = std::clamp<float>(cmd, -12000, 12000);
+        error = point-pos;
+
+        float cmd = lbPID.update(error);
+        cmd = clamp<float>(cmd, -12000, 12000);
+
         motor->move_voltage(cmd);
-        delay (20);
     }
-    motor->move(0);
+
+    lbPID.reset();
     hasFinished = true;
 }
 void LadyBrown::manualMove(int dir) {
     if (dir == 0) {
         manualControl = false;
+        cancel = false;
         if (hasFinished) {
             motor->move(0);
         }
@@ -55,13 +49,19 @@ void LadyBrown::manualMove(int dir) {
     }
     else if (!manualControl) {
         manualControl = true;
-        while (!hasFinished) pros::delay(15);
+        cancelMotion();
         if (dir == 1) {
-            //Robot::Actions::FlingRing(true, 30);
+            Robot::Actions::FlingRing(true, 30);
         }
     }
     
     motor->move(127 * dir);
+}
+
+void LadyBrown::cancelMotion() {
+    cancel = true;
+    waitForFinish();
+    cancel = false;
 }
 void LadyBrown::waitForFinish() {
     while (!hasFinished) {
@@ -96,7 +96,6 @@ void LadyBrown::moveTo(const std::string action, bool async) {
     }
 }
 void LadyBrown::cycle() {
-    std::cout << "here\n";
     int newState = ++currentStateNum;
     if (newState == stateList.size()) newState=0;
     string state = stateList[newState];

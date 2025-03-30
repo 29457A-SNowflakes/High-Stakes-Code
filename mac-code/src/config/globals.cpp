@@ -111,7 +111,7 @@ Rotation Robot::Sensors::LBRotation (11);
 adi::DigitalIn Robot::Sensors::LBLimiter ('H');
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
-const PID LadyBrown::lbPID {
+PID LadyBrown::lbPID {
     2.4,
     0,
     1

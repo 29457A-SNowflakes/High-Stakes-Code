@@ -29,7 +29,7 @@ class LadyBrown {
         static const float maxPos; // maximum position allowed
         static const float exitError; // the maximum error the P controller will exit on
 
-        static const PID lbPID; // The lady brown PID
+        static PID lbPID; // The lady brown PID
 
         static float timeout; // maximum time allowed for P controller
 
@@ -41,6 +41,8 @@ class LadyBrown {
         static void moveToPoint(float point, bool toRest=false); // generic function to move to rotational position (centidegrees)
 
         static void waitForFinish(); // wait for P controller to finish
+
+        static void cancelMotion();
         
     protected:
         static bool manualControl; // is under overriding control
