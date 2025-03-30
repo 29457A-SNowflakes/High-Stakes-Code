@@ -102,7 +102,7 @@ void opcontrol() {
 
         }
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
-            Robot::Pneumatics::doinker.toggle();
+            Robot::Pneumatics::primaryDoinker.toggle();
         }
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
 

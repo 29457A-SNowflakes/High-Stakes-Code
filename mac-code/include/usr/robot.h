@@ -99,8 +99,9 @@ class Robot {
         class Pneumatics {
             public:
                 static adi::Pneumatics Mogo;
-                static adi::Pneumatics doinker;
-                static adi::Pneumatics intakeLift;
+                static adi::Pneumatics primaryDoinker;
+                static adi::Pneumatics secondaryDoinker;
+            protected:
         };
 
         class Motors {
