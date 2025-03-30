@@ -11,93 +11,7 @@ using namespace pros;
 using namespace lemlib;
 using namespace std;
 
-//* Deprecated
-/*
-void LadyBrown::LBLoop() {
-    currentState = "REST";
-    bool isOut;
-    bool forceHold = false;
-    float holdTarget = 0;
-    float startedAction = millis();
-    Task t ([=] {
-        while (true) {
-            delay(100);
-            //std::cout << prevState << "\n";
-        }
-    });
-    while (true) {
-        delay (20);
 
-        float target = States[currentState] * 100;
-        float currentPoint = RotSens->get_position() * ratio;
-        float error = target-currentPoint;
-
-        //std::cout << hasReached << "\n";
-
-        if (prevState != currentState) {
-            std::cout << "HERE";
-            startedAction = millis();
-            hasReached = false;
-        }
-        prevState = currentState;
-        float elapsed = 0; //millis()-startedAction;
-
-        if (currentPoint >= maxRot*100) {
-
-            target = (maxRot-acceptableError) * 100;
-            forceHold = true;
-
-        } else if (currentPoint <= minRot*100 && false) {
-
-            target = (minRot+acceptableError) * 100;
-            forceHold = true;
-
-        } else {
-            target = States[currentState] * 100;
-            forceHold = false;
-            isOut = false;
-        }
-
-        
-
-        if (Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && currentPoint < maxRot*100 && hasReached) {
-            LBMotor->move(127);
-            holdTarget = currentPoint;
-            continue;
-        } else {
-            LBMotor->move(0);
-        }
-        if (error <= acceptableError * 100) {
-            if (!queuedActions.empty()) {
-                currentState = queuedActions.front(); queuedActions.pop();
-                hasReached = false;
-            } else {
-                hasReached = true;
-                holdTarget = currentPoint;
-            }
-            continue;
-        }
-
-        //std::cout << currentState << "\n";
-
-        if ((!hasReached && elapsed <= timeout) || hold || forceHold) {
-            if (!hasReached || forceHold) {
-                error = target-currentPoint;
-                std::cout << error << "\n";
-            } else if (hold) {
-                error = holdTarget-currentPoint;
-            }
-
-            float cmd = pid.update(error) / 3;
-            cmd = std::clamp<float>(cmd, -200, 200);
-            LBMotor->move_velocity(cmd);
-        }
-        else LBMotor->move(0);
-        
-
-    }
-}
-*/
 
 void LadyBrown::moveToPoint(float point, bool toRest) {
     hasFinished = false;
@@ -123,7 +37,7 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
         elapsed = pros::millis()-startTime;
         pos = rotSens->get_position() * gearRatio;
         error = targ-pos;
-        float cmd = P_Gain * error;
+        float cmd = lbPID.kP * error;
         cmd = std::clamp<float>(cmd, -12000, 12000);
         motor->move_voltage(cmd);
         delay (20);

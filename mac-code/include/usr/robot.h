@@ -29,7 +29,7 @@ class LadyBrown {
         static const float maxPos; // maximum position allowed
         static const float exitError; // the maximum error the P controller will exit on
 
-        static const float P_Gain; // The P gain, must be tuned
+        static const PID lbPID; // The lady brown PID
 
         static float timeout; // maximum time allowed for P controller
 
