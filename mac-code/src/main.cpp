@@ -47,7 +47,7 @@ void initialize() {
             };
             std::cout << pkg.dump() << "\n";
         }
-    });
+    }); x.suspend();
     //Robot::Inits::TuningLogicLoop();
     //Robot::master.rumble(". - .");
 }
@@ -74,7 +74,7 @@ void autonomous() {
 void opcontrol() {
     Robot::Screen::printConsole.focus();
     //Robot::Inits::colourSort(Robot::playingColour);
-    Robot::Sensors::LBRotation.set_position(LadyBrown::states["LOAD"]+650);
+    Robot::Sensors::LBRotation.set_position(0);
     init = false;
     pros::Controller* master = &Robot::master;
     Robot::Screen::printConsole.clear();

@@ -21,8 +21,10 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
 
     float startTime = pros::millis();
     float elapsed = pros::millis()-startTime;
+    std::cout << exitError << "\n";
 
-    while (elapsed < timeout && !cancel && error < exitError) {
+    while (elapsed < timeout && !cancel && error > exitError) {
+        std::cout << error << "\n";
 
         elapsed = millis()-startTime;
 
@@ -33,6 +35,9 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
         cmd = clamp<float>(cmd, -12000, 12000);
 
         motor->move_voltage(cmd);
+
+
+        delay(10);
     }
 
     lbPID.reset();
@@ -51,7 +56,7 @@ void LadyBrown::manualMove(int dir) {
         manualControl = true;
         cancelMotion();
         if (dir == 1) {
-            Robot::Actions::FlingRing(true, 30);
+            Robot::Actions::FlingRing(true, 5);
         }
     }
     
