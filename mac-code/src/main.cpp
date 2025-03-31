@@ -47,7 +47,7 @@ void initialize() {
             };
             std::cout << pkg.dump() << "\n";
         }
-    }); x.suspend();
+    });
     //Robot::Inits::TuningLogicLoop();
     //Robot::master.rumble(". - .");
 }

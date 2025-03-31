@@ -29,10 +29,10 @@ rd::Selector Robot::Screen::autonSelector ({
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
-Rotation trackingRotSens (7);
+Rotation horiTrackingRotSens (-7);
 
 TrackingWheel horiTrackingWheel (
-	&trackingRotSens,
+	&horiTrackingRotSens,
 	2,
 	-1.75
 );
