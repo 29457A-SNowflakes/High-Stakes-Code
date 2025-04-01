@@ -4,6 +4,7 @@
 #include "usr/robot.h"
 #include "usr/utils.h"
 #include <algorithm>
+#include <cstdlib>
 #include <map>
 #include <queue>
 #include <string>
@@ -23,7 +24,7 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
     float elapsed = pros::millis()-startTime;
     std::cout << exitError << "\n";
 
-    while (elapsed < timeout && !cancel && error > exitError) {
+    while (elapsed < timeout && !cancel && abs(error) > exitError) {
         std::cout << error << "\n";
 
         elapsed = millis()-startTime;
@@ -56,7 +57,7 @@ void LadyBrown::manualMove(int dir) {
         manualControl = true;
         cancelMotion();
         if (dir == 1) {
-            Robot::Actions::FlingRing(true, 5);
+            //Robot::Actions::FlingRing(true, 5);
         }
     }
     
@@ -86,9 +87,7 @@ void LadyBrown::moveTo(const std::string action, bool async) {
     float point = states[action];
     std::cout << "Current State: " << currentState << ", Point: " << point << "\n";
 
-    cancel = true;
-    waitForFinish();
-    cancel = false;
+   cancelMotion();
 
     // Handle async or synchronous operation
     if (async) {

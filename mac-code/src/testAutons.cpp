@@ -27,7 +27,7 @@ void Testers::Move72() {
     Robot::chassis.calibrate();
     delay(1000);
     Robot::chassis.setPose(0,0,0);
-    Robot::chassis.moveToPoint(0, 72, 10000);
+    Robot::chassis.moveToPoint(0, 48, 10000);
     Robot::chassis.waitUntilDone();
     Robot::master.rumble("-");
 }
