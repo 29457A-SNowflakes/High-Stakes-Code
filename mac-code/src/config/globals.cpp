@@ -66,7 +66,7 @@ Drivetrain Robot::Motors::dt (
     10.325, // measure
     3.25,  
     400,
-    2
+    1
 );
 
 Motor Robot::Motors::hooksMotor (20, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
