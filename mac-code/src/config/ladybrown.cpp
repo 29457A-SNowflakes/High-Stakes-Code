@@ -57,7 +57,7 @@ void LadyBrown::manualMove(int dir) {
         manualControl = true;
         cancelMotion();
         if (dir == 1) {
-            //Robot::Actions::FlingRing(true, 5);
+            Robot::Actions::FlingRing(true, 10, 40);
         }
     }
     
