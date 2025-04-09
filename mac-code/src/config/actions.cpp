@@ -30,7 +30,8 @@ void Robot::Actions::setMogoFor(bool extended, int time, bool async) {
 }
 
 
-void Robot::Actions::FlingRing(bool async, float for_) {
+void Robot::Actions::FlingRing(bool async, float for_, float speed) {
+    speed = (-std::abs(speed) * 12e4)/127;
     if (async) {
         pros::Task t ([=] {
             FlingRing(false);
@@ -38,6 +39,6 @@ void Robot::Actions::FlingRing(bool async, float for_) {
         delay(10); return;
     }
     Motors::intakeAutoControl = true;
-    Robot::Actions::setIntakeFor(-1, Intake_Action::SECOND, for_, false);
+    Robot::Motors::hooksMotor.move_voltage(speed);
     Motors::intakeAutoControl = false;
 }

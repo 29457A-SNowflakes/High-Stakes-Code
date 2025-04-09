@@ -21,6 +21,7 @@ void Robot::Inits::colourSort() {
     pros::Task task ([=] {
         float colourToSort;
         int cooldownStart;
+        
         while (true) {
             sens->set_led_pwm(100);
 

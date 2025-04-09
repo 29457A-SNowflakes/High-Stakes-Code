@@ -82,7 +82,7 @@ class Robot {
                 static void setIntake (int dir, Intake_Action type);
                 static void setIntakeFor (int dir, Intake_Action type, int time, bool async=true);
 
-                static void FlingRing(bool async, float for_=100);
+                static void FlingRing(bool async, float for_=100, float speed=127);
 
                 static void setMogoFor (bool extended, int time, bool async=true);
         };
