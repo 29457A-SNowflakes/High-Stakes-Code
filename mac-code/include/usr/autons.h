@@ -8,15 +8,10 @@ namespace Autons {
     }
 
     namespace Match {
-        void Solo_AWP_Blue();
-        void Solo_AWP_Red();
-
-        void Red_Ring_Side();
-        void Blue_Ring_Side();
-
-        void Red_Mogo_RUSH();
+        void SAWP_Red();
+        void SAWP_Blue();
     }
     namespace Skills {
-        void Skills();
+        //void Skills();
     }
 }
