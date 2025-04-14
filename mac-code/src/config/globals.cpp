@@ -55,7 +55,7 @@ OdomSensors Robot::Sensors::sensors (
 
 adi::Pneumatics Robot::Pneumatics::Mogo ('a', false, false);
 adi::Pneumatics Robot::Pneumatics::primaryDoinker ('c', false, false);
-adi::Pneumatics Robot::Pneumatics::secondaryDoinker ('b', false);
+adi::Pneumatics Robot::Pneumatics::secondaryDoinker ('d', false, true);
 
 MotorGroup leftDrive ({19, -17, 18}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
 MotorGroup rightDrive ({-18, 16, 5}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
