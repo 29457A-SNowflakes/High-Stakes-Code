@@ -62,7 +62,7 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    //Autons::Match::Red_Mogo_RUSH();
+    Autons::Match::SAWP_Red();
     Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();

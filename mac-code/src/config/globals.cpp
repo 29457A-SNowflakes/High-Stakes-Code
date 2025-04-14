@@ -112,8 +112,8 @@ adi::DigitalIn Robot::Sensors::LBLimiter ('H');
 Rotation* LadyBrown::rotSens = &Robot::Sensors::LBRotation;
 
 PID LadyBrown::lbPID {
-    1,
-    0.01,
+    2,
+    0,
     2.5
 }; // TO BE TUNED
 const float LadyBrown::minPos = -100; // not used
