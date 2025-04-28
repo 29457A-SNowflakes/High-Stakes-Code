@@ -24,7 +24,7 @@ void initialize() {
 
     //LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
 
-    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) && false) {
+    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))) {
         delay(20);
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hasChangedColour = true;
@@ -55,14 +55,15 @@ void initialize() {
 void autonomous() {
     int prevTimeout = LadyBrown::timeout;
     Robot::Pneumatics::Mogo.retract();
+    Robot::Pneumatics::primaryDoinker.retract();
+    Robot::Pneumatics::secondaryDoinker.retract();
     Robot::Screen::printConsole.focus();
-    //Robot::Inits::colourSort(Robot::playingColour);
     init = false;
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    
+    Autons::Match::SAWP_Red();
     //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();

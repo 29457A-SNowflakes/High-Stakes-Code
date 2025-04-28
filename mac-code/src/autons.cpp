@@ -43,25 +43,7 @@ void Autons::Match::SAWP_Red() {
     Robot::Pneumatics::Mogo.extend();
 
     // middle ring stack
-    chassis->turnToHeading(35, 800, {}, false);
-    chassis->moveToPoint(-8, -5, 2000, {.maxSpeed=70});
-    chassis->turnToHeading(35, 800, {});
-    chassis->waitUntilDone();
-    Robot::Pneumatics::primaryDoinker.extend();
-    delay(500);
-
-    chassis->turnToPoint(-40, -34, 500, {.forwards=false});
-    chassis->moveToPoint(-40, -34, 2000, {.forwards=false}, false);
-    Robot::Pneumatics::primaryDoinker.retract();
-    delay(200);
-    Robot::Actions::setIntake(1, BOTH);
-    chassis->moveToPoint(-18, -47, 2000);
-    chassis->turnToHeading(180, 800, {}, false);
-    delay(1000);
-    Robot::Pneumatics::Mogo.retract();
-    chassis->moveToPoint(-18, -55, 1000, {}, false);
-    chassis->turnToHeading(270, 600);
-    return;
+    
 }
 void Autons::Match::SAWP_Blue() {
     Chassis* chassis = &Robot::chassis;
