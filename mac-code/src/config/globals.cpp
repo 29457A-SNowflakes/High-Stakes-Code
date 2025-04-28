@@ -55,7 +55,7 @@ OdomSensors Robot::Sensors::sensors (
 
 adi::Pneumatics Robot::Pneumatics::Mogo ('a', false, false);
 adi::Pneumatics Robot::Pneumatics::primaryDoinker ('c', false, false);
-adi::Pneumatics Robot::Pneumatics::secondaryDoinker ('d', false, true);
+adi::Pneumatics Robot::Pneumatics::secondaryDoinker ('d', false, false);
 
 MotorGroup leftDrive ({19, -17, 18}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
 MotorGroup rightDrive ({-18, 16, 5}, pros::MotorGears::blue, pros::v5::MotorEncoderUnits::deg);
@@ -66,11 +66,11 @@ Drivetrain Robot::Motors::dt (
     10.325, // measure
     3.25,  
     400,
-    1
+    3
 );
 
 Motor Robot::Motors::hooksMotor (20, v5::MotorGears::blue, v5::MotorEncoderUnits::deg);
-Motor Robot::Motors::preRollerMotor (4, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // ?
+Motor Robot::Motors::preRollerMotor (10, v5::MotorGears::green, v5::MotorEncoderUnits::deg); // ?
 
 Motor Robot::Motors::LBMotor (12, v5::MotorGears::green, v5::MotorEncoderUnits::degrees); // redo
 

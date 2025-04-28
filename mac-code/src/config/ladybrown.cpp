@@ -22,10 +22,10 @@ void LadyBrown::moveToPoint(float point, bool toRest) {
 
     float startTime = pros::millis();
     float elapsed = pros::millis()-startTime;
-    std::cout << exitError << "\n";
+    //std::cout << exitError << "\n";
 
     while (elapsed < timeout && !cancel && abs(error) > exitError) {
-        std::cout << error << "\n";
+       // std::cout << error << "\n";
 
         elapsed = millis()-startTime;
 
@@ -57,7 +57,7 @@ void LadyBrown::manualMove(int dir) {
         manualControl = true;
         cancelMotion();
         if (dir == 1) {
-            Robot::Actions::FlingRing(true, 5, 20);
+            //Robot::Actions::FlingRing(true, 5, 20);
         }
     }
     

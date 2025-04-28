@@ -62,8 +62,8 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Autons::Match::SAWP_Red();
-    Robot::Screen::autonSelector.run_auton();
+    
+    //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");
@@ -96,10 +96,12 @@ void opcontrol() {
             
         }
 
-        if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+        if (master->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
 
-            Robot::Pneumatics::Mogo.toggle();
+            Robot::Pneumatics::Mogo.retract();
 
+        } else {
+            Robot::Pneumatics::Mogo.extend();
         }
         if (master->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
             Robot::Pneumatics::primaryDoinker.toggle();
