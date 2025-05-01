@@ -24,7 +24,7 @@ void initialize() {
 
     //LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
 
-    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))) {
+    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) && false) {
         delay(20);
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hasChangedColour = true;
@@ -33,6 +33,7 @@ void initialize() {
             Robot::master.print(1, 1, "COLOUR: %s ", Robot::playingColour);
         }
     }
+    Robot::chassis.setPose(-58.5, -10.9, 270);
     //Robot::master.clear_line(1);
 
 
@@ -87,7 +88,7 @@ void opcontrol() {
         int leftX = master->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         int leftY = master->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 
-        if (leftY >= 15) {
+        if (leftY <= 15) {
 
             Robot::chassis.arcade(leftY, leftX);
 
