@@ -11,6 +11,7 @@
 bool init;
 
 void initialize() {
+    Robot::playingColour="BLUE";
     bool hasChangedColour = false;
     init = true;
     Robot::Screen::printConsole.println(" -- Initialize --");
@@ -64,7 +65,7 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Autons::Match::SAWP_Red();
+    Autons::Match::SPIN();
     //Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();

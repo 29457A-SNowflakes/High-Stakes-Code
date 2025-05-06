@@ -10,6 +10,7 @@ namespace Autons {
     namespace Match {
         void SAWP_Red();
         void SAWP_Blue();
+        void SPIN();
     }
     namespace Skills {
         //void Skills();
