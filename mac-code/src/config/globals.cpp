@@ -24,8 +24,10 @@ using namespace std;
 Controller Robot::master (E_CONTROLLER_MASTER);
 
 rd::Selector Robot::Screen::autonSelector ({
-    {"SAWP Red"},
-    {"SAWP Blue"},
+    {"N_R", Autons::Match::N_R},
+    {"N_B", Autons::Match::N_B},
+    {"S_R", Autons::Match::S_R},
+    {"S_B", Autons::Match::S_B},
 });
 rd::Console Robot::Screen::printConsole ("Printing");
 
@@ -125,7 +127,7 @@ const float LadyBrown::gearRatio = 1;
 string LadyBrown::currentState = "REST";
 std::map<string, float> LadyBrown::states = {
     std::pair<string, float> {"REST", 0},
-    std::pair<string, float> {"LOAD", 800},
+    std::pair<string, float> {"LOAD", 600},
     std::pair<string, float> {"DESCORE", 15000}
 };
 std::vector<string> LadyBrown::stateList = {"REST", "LOAD"};

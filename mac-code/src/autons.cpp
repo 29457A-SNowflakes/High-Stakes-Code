@@ -131,6 +131,80 @@ void Autons::Match::SAWP_Blue() {
     chassis->waitUntilDone();
     
 }
+
+void Autons::Match::N_R() {
+    lemlib::Chassis* chassis = &Robot::chassis;
+    if (!competition::is_connected()) {
+        chassis->calibrate();
+        delay(2000);
+    }
+    chassis->setPose(0, 0, 0);
+    Robot::playingColour="RED";
+
+    chassis->moveToPoint(0, -34, 2000, {.forwards=false,.maxSpeed=90});
+    chassis->waitUntilDone();
+    Robot::Pneumatics::Mogo.extend();
+    chassis->turnToPoint(35, -32, 1000);
+    chassis->waitUntilDone();
+    Robot::Actions::setIntake(1, BOTH);
+    chassis->moveToPoint(35, -32, 1000, {.maxSpeed=60}, false);
+    delay(3000);
+}
+void Autons::Match::N_B() {
+    lemlib::Chassis* chassis = &Robot::chassis;
+    if (!competition::is_connected()) {
+        chassis->calibrate();
+        delay(2000);
+    }
+    chassis->setPose(0, 0, 0);
+    Robot::playingColour="BLUE";
+
+    chassis->moveToPoint(0, -34, 2000, {.forwards=false,.maxSpeed=90});
+    chassis->waitUntilDone();
+    Robot::Pneumatics::Mogo.extend();
+    chassis->turnToPoint(-35, -32, 1000, {.maxSpeed=60}, false);
+    chassis->waitUntilDone();
+    Robot::Actions::setIntake(1, BOTH);
+    chassis->moveToPoint(-35, -32, 5000, {.maxSpeed=60}, false);
+}
+void Autons::Match::S_R() {
+    lemlib::Chassis* chassis = &Robot::chassis;
+    if (!competition::is_connected()) {
+        chassis->calibrate();
+        delay(2000);
+    }
+    chassis->setPose(0, 0, 0);
+    Robot::playingColour="RED";
+
+    chassis->moveToPoint(0, -34, 2000, {.forwards=false,.maxSpeed=90});
+    chassis->waitUntilDone();
+    Robot::Pneumatics::Mogo.extend();
+    chassis->turnToPoint(-35, -32, 1000, {.maxSpeed=60}, false);
+    chassis->waitUntilDone();
+    Robot::Actions::setIntake(1, BOTH);
+    chassis->moveToPoint(-35, -32, 5000, {.maxSpeed=60}, false);
+    chassis->waitUntilDone(); delay(5000);
+}
+void Autons::Match::S_B() {
+    lemlib::Chassis* chassis = &Robot::chassis;
+    if (!competition::is_connected()) {
+        chassis->calibrate();
+        delay(2000);
+    }
+    chassis->setPose(0, 0, 0);
+    Robot::playingColour="BLUE";
+
+    chassis->moveToPoint(0, -40, 2000, {.forwards=false,.maxSpeed=90});
+    chassis->waitUntilDone();
+    Robot::Pneumatics::Mogo.extend();
+    chassis->turnToPoint(36, -30, 1000, {.maxSpeed=100}, false);
+    chassis->waitUntilDone();
+    Robot::Actions::setIntake(1, BOTH);
+    chassis->moveToPoint(36, -30, 1000, {.maxSpeed=100}, false);
+    chassis->waitUntilDone(); delay(5000);
+}
+
+        
 void Autons::Match::SPIN() {
     Robot::chassis.setPose(0, 0, 0);
     Robot::chassis.moveToPoint(0, 30, 1000);

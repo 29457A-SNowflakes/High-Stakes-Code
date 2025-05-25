@@ -13,6 +13,7 @@ bool init;
 void initialize() {
     Robot::playingColour="BLUE";
     bool hasChangedColour = false;
+    Robot::Inits::isSorting=false;
     init = true;
     Robot::Screen::printConsole.println(" -- Initialize --");
     Robot::Screen::printConsole.println("Initializing...");
@@ -25,13 +26,17 @@ void initialize() {
 
     //LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
 
-    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) && false) {
+    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))) {
         delay(20);
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hasChangedColour = true;
             if (Robot::playingColour == "BLUE") Robot::playingColour = "RED";
             else Robot::playingColour = "BLUE";
             Robot::master.print(1, 1, "COLOUR: %s ", Robot::playingColour);
+        }
+        if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+            Robot::chassis.calibrate();
+            delay(1500);
         }
     }
     Robot::chassis.setPose(-58.5, -10.9, 270);
@@ -55,6 +60,7 @@ void initialize() {
 }
 
 void autonomous() {
+    Robot::Inits::isSorting=true;
     int prevTimeout = LadyBrown::timeout;
     Robot::Pneumatics::Mogo.retract();
     Robot::Pneumatics::primaryDoinker.retract();
@@ -65,8 +71,8 @@ void autonomous() {
     Robot::Screen::printConsole.println(" -- Autonomous --");
     Robot::Screen::printConsole.println(" Running Auton...");
 
-    Autons::Match::SPIN();
-    //Robot::Screen::autonSelector.run_auton();
+    //Autons::Match::N_B();
+    Robot::Screen::autonSelector.run_auton();
 
     Robot::Screen::printConsole.clear();
     Robot::Screen::printConsole.println(" -- Autonomous --");

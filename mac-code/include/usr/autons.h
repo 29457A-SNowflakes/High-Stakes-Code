@@ -11,6 +11,10 @@ namespace Autons {
         void SAWP_Red();
         void SAWP_Blue();
         void SPIN();
+        void N_R();
+        void N_B();
+        void S_R();
+        void S_B();
     }
     namespace Skills {
         //void Skills();
