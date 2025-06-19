@@ -26,7 +26,7 @@ void initialize() {
 
     //LadyBrown::rotSens->set_position(LadyBrown::states["LOAD"]);
 
-    while (init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))) {
+    while (false && init && (!competition::is_field_control() && !Robot::master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))) {
         delay(20);
         if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hasChangedColour = true;
@@ -120,7 +120,7 @@ void opcontrol() {
             LadyBrown::moveTo("DESCORE");
 
         }
-        if (Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
+        if (false && Robot::master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
 
             autonomous();
              
